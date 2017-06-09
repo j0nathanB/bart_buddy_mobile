@@ -42,6 +42,13 @@ buck-out/
 \.buckd/
 *.keystore
 
+#Ignore CocoaPods 
+ios/Pods/ 
+./ios/Pods/ 
+ios/Pods/* 
+./ios/Pods/*
+ios/bart_buddy_mobile/AppDelegate.m
+
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
