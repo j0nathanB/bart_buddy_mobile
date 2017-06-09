@@ -1,0 +1,3 @@
+rootProject.name = 'bart_buddy_mobile'
+
+include ':app'
