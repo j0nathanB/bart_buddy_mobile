@@ -12,6 +12,10 @@ import ClosestStation from './components/closeststation';
 import Bulletin from './components/bulletin';
 import hardCodedDestinations from './components/destinations';
 import hardCodedStationsList from './components/stations';
+import StationsMenu from './components/stationsmenu';
+import DestinationsMenu from './components/destinationsmenu';
+
+console.ignoredYellowBox = ['Warning: BackAndroid'];
 
 export default class bart_buddy_mobile extends Component {
   constructor(props) {
@@ -38,6 +42,10 @@ export default class bart_buddy_mobile extends Component {
     alert(`Station: Parent Component = ${data}`);
     this.setState({currentStation: data});
     //this.simplePost(data, this.state.currentStation);
+  }
+
+  getSchedule(station) {
+
   }
 
   render() {
@@ -67,76 +75,6 @@ export default class bart_buddy_mobile extends Component {
     );
   }
 }
-
-class StationsMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedStation: "nothing selected yet"
-    };
-    this.selectionHandler = this.selectionHandler.bind(this);
-  }
-
-  selectionHandler(value) {
-    console.log("StationsMenu selectionHandler called");
-    this.props.funcForStation(value);
-  }
-
-  render() {
-    return (
-      <View style={{ padding: 10, flexDirection: 'column', backgroundColor: 'chartreuse' }}>
-        <View style={{ flex: 1 }}><Text>My App</Text></View>
-        <Menu onSelect={this.selectionHandler}>
-          <MenuTrigger>
-            <Text style={{ fontSize: 20 }}>&#8942;</Text>
-          </MenuTrigger>
-          <MenuOptions>
-            { this.props.stationsList.map(
-              (current, idx) => { 
-              return (<MenuOption value={current} key={idx}>
-                    <Text>{current}</Text>
-                  </MenuOption>)})}
-          </MenuOptions>
-        </Menu>
-      </View>
-    );
-  }
-}
-
-class DestinationsMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userSelection: "nothing selected yet"
-    };
-    this.selectionHandler = this.selectionHandler.bind(this);
-  }
-
-  selectionHandler(value) {
-    this.props.funcforDestination(value);
-  }
-
-  render() {
-    return (
-      <View style={{ padding: 10, flexDirection: 'column', backgroundColor: 'pink' }}>
-        <View style={{ flex: 1 }}><Text>My App</Text></View>
-        <Menu onSelect={this.selectionHandler}>
-          <MenuTrigger>
-            <Text style={{ fontSize: 20 }}>&#8942;</Text>
-          </MenuTrigger>
-          <MenuOptions>
-            { this.props.destinations.map(
-              (current, idx) => { 
-              return (<MenuOption value={current} key={idx}>
-                    <Text>{current}</Text>
-                  </MenuOption>)})}
-          </MenuOptions>
-        </Menu>
-      </View>
-    );
-  }
-}
-
 
 const styles = StyleSheet.create({
   container: {
