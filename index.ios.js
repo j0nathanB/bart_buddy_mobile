@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  View,
   Text,
-  View
-} from 'react-native';
+  MapView,
+  Dimensions,
+  StatusBarIOS
+} from 'react-native'
+
+const { width, height } = Dimensions.get('window')
+
+import { Container } from 'native-base';
+
+import MapContainer from './src/index';
+
 import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import Map from './components/map';
 import UseLocationButton from './components/uselocationbutton';
@@ -49,9 +59,16 @@ export default class bart_buddy_mobile extends Component {
   }
 
   render() {
+    const region ={
+      latitude: 37.706272,
+      longitude: -122.468983,
+      latitudeDelta: 0.5922,
+      longitudeDelta: 0.0332
+    }
     return (
       <View style={styles.container}>
-        <MenuContext style={{ flex: 1 }}>
+        <MenuContext style={{ flex: 1 }}>        
+          <MapContainer region={region} />
           <DestinationsMenu destinations={hardCodedDestinations} funcforDestination={this.updateRoute}/>
           <StationsMenu stationsList={hardCodedStationsList} funcForStation={this.updateStation}/>
         </MenuContext>
@@ -62,8 +79,7 @@ export default class bart_buddy_mobile extends Component {
           "Everybody Needs One"
         </Text>
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>
-        <ClosestStation pushToClosestStation={"Powell Street"} />
-        <Map MapProps={"I am MapProps"}/>
+        <ClosestStation pushToClosestStation={"Powell Street"} />     
         <Bulletin update={"Your train leaving in 3 minutes"} style={styles.bulletinStyle}/>
         <Bulletin update={"Your train leaving in 8 minutes"} style={styles.bulletinStyle}/>
         <Bulletin update={"Your train leaving in 17 minutes"} style={styles.bulletinStyle}/>

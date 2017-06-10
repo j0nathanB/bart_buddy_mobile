@@ -1,4 +1,4 @@
-/**
+  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -8,10 +8,10 @@
  */
 
 #import "AppDelegate.h"
-
 #import <React/RCTBundleURLProvider.h>
+//#import <RCTAnimation/RCTValueAnimatedNode.h>
 #import <React/RCTRootView.h>
-
+@import GoogleMaps;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -19,6 +19,8 @@
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+
+  [GMSServices provideAPIKey:@"AIzaSyACIVBMEDcLDVMMX2QMu-07Qogw6dDzGIw"];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"bart_buddy_mobile"
@@ -33,5 +35,7 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
+
+
 
 @end
