@@ -20,7 +20,8 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
-  [GMSServices provideAPIKey:@"AIzaSyACIVBMEDcLDVMMX2QMu-07Qogw6dDzGIw"];
+  [GMSServices provideAPIKey:@"AIzaSyCII44MOuAE4Za6FxhJfrOtB00tKvFj20U"];
+  
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"bart_buddy_mobile"
