@@ -60,17 +60,15 @@ export default class bart_buddy_mobile extends Component {
 
   render() {
     const region ={
-      latitude: 37.706272,
-      longitude: -122.468983,
-      latitudeDelta: 0.5922,
-      longitudeDelta: 0.0332
+      latitude: 37.774836,
+      longitude: -122.224175,
+      latitudeDelta: 0.4,
+      longitudeDelta: 0.52
     }
     return (
       <View style={styles.container}>
         <MenuContext style={{ flex: 1 }}>        
           <MapContainer region={region} />
-          <DestinationsMenu destinations={hardCodedDestinations} funcforDestination={this.updateRoute}/>
-          <StationsMenu stationsList={hardCodedStationsList} funcForStation={this.updateStation}/>
         </MenuContext>
         <Text style={styles.welcome}>
           BART Buddy
