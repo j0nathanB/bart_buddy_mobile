@@ -44,13 +44,13 @@ export default class bart_buddy_mobile extends Component {
 
   updateRoute(data) {
     alert(`Destination: Parent Component = ${data}`);
-    this.setState({currentRoute: data});
+    this.setState({ currentRoute: data });
     //this.simplePost(data, this.state.currentStation);
   }
 
   updateStation(data) {
     alert(`Station: Parent Component = ${data}`);
-    this.setState({currentStation: data});
+    this.setState({ currentStation: data });
     //this.simplePost(data, this.state.currentStation);
   }
 
@@ -59,13 +59,13 @@ export default class bart_buddy_mobile extends Component {
   }
 
   render() {
-    const region ={
+    const region = {
       latitude: 37.774836,
       longitude: -122.224175,
       latitudeDelta: 0.4,
       longitudeDelta: 0.52
     }
-    return (
+    return ( 
       <View style={styles.container}>
         <MenuContext style={{ flex: 1 }}>        
           <MapContainer region={region} />
@@ -89,6 +89,7 @@ export default class bart_buddy_mobile extends Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
