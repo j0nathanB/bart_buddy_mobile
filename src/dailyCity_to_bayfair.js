@@ -10,12 +10,11 @@ let Dailycity = [
 	{
 		latitude: 37.664379,
 		longitude:  -122.444279
-    },
-    {
-    	latitude: 37.684552,
-    	longitude: -122.466042
-    }
-
+  },
+  {
+    latitude: 37.684552,
+    longitude: -122.466042
+  }
 ];
 
 let Daily = [
@@ -44,66 +43,65 @@ let Daily = [
 
 let Macarthur_richmond = [
     // Warmsprings
-    {
-      latitude: 37.502171,
-      longitude: -121.939313
-    },
-    // Fremont
-    {
-      latitude: 37.557465, 
-      longitude: -121.976608
-    },
-    //Union City 
-    {
-      latitude: 37.590630,
-      longitude: -122.017388
-    },
-    // Souht HAyward 
-    {
-      latitude: 37.634375,
-      longitude: -122.057189
-    },
-    // HAyward 
-    {
-      latitude: 37.669723,
-      longitude: -122.087018
-    },
-    // bay fair
-    {
-      latitude: 37.696924,
-      longitude: -122.126514
-    },
-    // sna leandro 
-    {
-      latitude: 37.721947,
-      longitude: -122.160844
-    },
-    // coliseum 
-    {
-      latitude: 37.753661,
-      longitude: -122.196869
-    },
-    // air port OAK 
-    {
-      latitude: 37.713238,
-      longitude: -122.212191
-    },
-    // coliseum 
-    {
-      latitude: 37.753661,
-      longitude: -122.196869
-    },
-    // fruitvale
-    {
-      latitude: 37.774836,
-      longitude: -122.224175
-    },
-    // lake merit
-    {
-      latitude: 37.797027,
-      longitude: -122.265180
-    },
-    {
+  {
+    latitude: 37.502171,
+    longitude: -121.939313
+  },
+  // Fremont
+  {
+    latitude: 37.557465, 
+    longitude: -121.976608
+  },
+  //Union City 
+  {
+    latitude: 37.590630,
+    longitude: -122.017388
+  },
+  // Souht HAyward 
+  {
+    latitude: 37.634375,
+    longitude: -122.057189
+  },
+  // HAyward 
+  {
+    latitude: 37.669723,
+    longitude: -122.087018
+  },
+  // bay fair
+  {
+    latitude: 37.696924,
+    longitude: -122.126514
+  },
+  // sna leandro 
+  {
+    latitude: 37.721947,
+    longitude: -122.160844
+  },
+  // coliseum 
+  {
+    latitude: 37.753661,
+    longitude: -122.196869
+  },
+  // air port OAK 
+  {
+    latitude: 37.713238,
+    longitude: -122.212191
+  },
+  // coliseum 
+  {
+    latitude: 37.753661,
+    longitude: -122.196869
+  },
+  // fruitvale
+  {
+    latitude: 37.774836,
+    longitude: -122.224175
+  },
+  // lake merit
+  {
+    latitude: 37.797027,
+    longitude: -122.265180
+  },{
 		latitude: 37.798510,
 		longitude: -122.276061
 	},{
@@ -182,54 +180,44 @@ let Dub_Daily = [
 	// west dublin 
 	{
 	  latitude: 37.699756,
-      longitude: -121.928240
+    longitude: -121.928240
 	},
     // castro valley
 	{
-      latitude: 37.690746,
-      longitude: -122.075602
+    latitude: 37.690746,
+    longitude: -122.075602
 	}, 
     // bay fair
-    {
-      latitude: 37.696924,
-      longitude: -122.126514
-    },
-    // sna leandro 
-    {
-      latitude: 37.721947,
-      longitude: -122.160844
-    },
-    // coliseum 
-    {
-      latitude: 37.753661,
-      longitude: -122.196869
-    },
-    // air port OAK 
-    {
-      latitude: 37.713238,
-      longitude: -122.212191
-    },
-    // coliseum 
-    {
-      latitude: 37.753661,
-      longitude: -122.196869
-    },
-    // fruitvale
-    {
-      latitude: 37.774836,
-      longitude: -122.224175
-    },
-    // lake merit
-    {
-      latitude: 37.797027,
-      longitude: -122.265180
-    },
-    {
-		latitude: 37.798510,
-		longitude: -122.276061
+  {
+    latitude: 37.696924,
+    longitude: -122.126514
+  },
+  // sna leandro 
+  {
+    latitude: 37.721947,
+    longitude: -122.160844
+  },
+  // coliseum 
+  {
+    latitude: 37.753661,
+    longitude: -122.196869
+  },
+  // fruitvale
+  {
+    latitude: 37.774836,
+    longitude: -122.224175
+  },
+  // lake merit
+  {
+    latitude: 37.797027,
+    longitude: -122.265180
+  },
+  {
+	  latitude: 37.798510,
+	  longitude: -122.276061
 	},
 	// west oakland
-    {
+  {
 	  latitude: 37.805042,
 	  longitude: -122.294823
 	}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'native-base';
+import {Container, View, Content, Button, Text} from 'native-base';
 import MapView from 'react-native-maps';
 import styles from "./MapContainerStyles.js";
 import stations from "./bart_stations.js";
@@ -11,6 +11,7 @@ import {
   Dub_Daily
   } from "./dailyCity_to_bayfair.js";
 
+import TrainView from './train_view.js';
 
 
 export const MapContainer = ({region}) => {
@@ -23,10 +24,46 @@ export const MapContainer = ({region}) => {
 			  region={region}
 			  mapType='terrain'
 			  >
-			  <MapView.Marker 
-			    coordinate={region}
-			    pinColor={"red"}
-			  />
+
+			  {stations.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"red"}
+			    key={index}
+			    />
+			  })}
+ 	      
+ 	      {Dub_Daily.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"blue"}
+			    key={index}
+			    />
+			  })}
+
+			  {Macarthur_richmond.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"orange"}
+			    key={index}
+			    />
+			  })}
+
+			  {Macarthur_pitt.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"orange"}
+			    key={index}
+			    />
+			  })}
+
+			  {Daily.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"orange"}
+			    key={index}
+			    />
+			  })}
 
 			  <MapView.Polyline 
 			    coordinates={stations}
@@ -49,7 +86,8 @@ export const MapContainer = ({region}) => {
 			    strokeWidth={5}
 			  />
 
-			    <MapView.Polyline 
+			  <MapView.Polyline 
+			    // displays trains between west oakland and daily city 
 			    coordinates={stations}
 			    strokeColor={"green"}
 			    geoDesic={true}
@@ -57,7 +95,7 @@ export const MapContainer = ({region}) => {
 			  />
 
 			  <MapView.Polyline 
-			  //displays line from daily city to milbrea
+			    // displays line from daily city to milbrea
 			    coordinates={Dailycity}
 			    strokeColor={"red"}
 			    strokeWidth={5}
@@ -88,14 +126,12 @@ export const MapContainer = ({region}) => {
 			  />
 
 			  <MapView.Polyline 
-			  //displays line from dublin to daily city 
+			  //displays line from dublin to west oakland 
 			    coordinates={Dub_Daily}
 			    strokeColor={"blue"}
 			    geoDesic={true}
 			    strokeWidth={2}
 			  />
-
-
 
 			</MapView>
 		</View>
