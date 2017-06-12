@@ -19,7 +19,9 @@ router.route('/')
     .post((req, res) => {
         console.log('in the correct route');
         console.log(req.body);
-        res.status(201).send({ data: 'Posted!' });
+        res.status(201).send({
+            data: 'Posted!'
+        });
     });
 
 router.route('/closest_station')
@@ -105,10 +107,18 @@ router.route('/schedule')
                     route => {
                         if (Array.isArray(route.estimate)) {
                             route.estimate.map(
-                                eta => { schedules.push({ minutes: eta.minutes, destination: route.destination }) }
+                                eta => {
+                                    schedules.push({
+                                        minutes: eta.minutes,
+                                        destination: route.destination
+                                    })
+                                }
                             )
                         } else {
-                            schedules.push({ minutes: route.estimate.minutes, destination: route.destination })
+                            schedules.push({
+                                minutes: route.estimate.minutes,
+                                destination: route.destination
+                            })
                         }
                     }
                 );
@@ -123,17 +133,14 @@ router.route('/getgtfs')
     .get((req, res) => {
         axios.get('http://api.bart.gov/gtfsrt/tripupdate.aspx')
             .then((response) => {
-                console.log('response: ', response.data);
                 var count = 0;
                 var d = new Date();
                 var cur_seconds = d.toTimeString().split(' ')[0].split(':');
                 cur_seconds = (+cur_seconds[0]) * 60 * 60 + (+cur_seconds[1]) * 60 + (+cur_seconds[2]);
-                console.log('seconds: ', cur_seconds);
 
                 var conform = ByteBuffer.btoa(response.data);
 
                 var feed = GtfsRealtimeBindings.FeedMessage.decode(conform);
-                console.log('GTFS length: ', feed.entity.length);
                 var someArr = [];
 
                 feed.entity.forEach(function(entity) {
@@ -213,7 +220,9 @@ router.route('/getgtfs')
                     });
                 }
             })
-            .catch((err) => { console.log('error: ', err) });
+            .catch((err) => {
+                console.log('error: ', err)
+            });
 
     })
 
