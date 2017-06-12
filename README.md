@@ -40,5 +40,7 @@ You must then open  bart_buddy_mobile.xcworkspace
   2.)  In - (BOOL)application:(UIApplication *)application 				  didFinishLaunchingWithOptions:(NSDictionary *)launchOptions, add [ GMSServices provideAPIKey:@“API_KEY_HERE”];
      -you msut have an API key from google Maps IOS SDK
 
-7.) react-native run-ios
-
+7.) go into node_modules/react-native/Libraries/NativeAnimation/GET THE CORRECT NAME OF THIS FILE
+	-once this file is open change 
+8.) react-native run-ios
+ 
