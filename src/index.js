@@ -11,6 +11,8 @@ import {
   Dub_Daily
   } from "./dailyCity_to_bayfair.js";
 
+import TrainView from './train_view.js';
+
 
 
 export const MapContainer = ({region}) => {
@@ -23,10 +25,46 @@ export const MapContainer = ({region}) => {
 			  region={region}
 			  mapType='terrain'
 			  >
-			  <MapView.Marker 
-			    coordinate={region}
-			    pinColor={"red"}
-			  />
+			  
+			  {stations.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"red"}
+			    key={index}
+			    />
+			  })}
+ 	      
+ 	      {Dub_Daily.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"blue"}
+			    key={index}
+			    />
+			  })}
+
+			  {Macarthur_richmond.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"orange"}
+			    key={index}
+			    />
+			  })}
+
+			  {Macarthur_pitt.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"orange"}
+			    key={index}
+			    />
+			  })}
+
+			  {Daily.map((x, index) => {
+			    return <TrainView 
+			    station_coordinates={x} 
+			    color={"orange"}
+			    key={index}
+			    />
+			  })}
 
 			  <MapView.Polyline 
 			    coordinates={stations}

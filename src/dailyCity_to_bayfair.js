@@ -204,16 +204,6 @@ let Dub_Daily = [
       latitude: 37.753661,
       longitude: -122.196869
     },
-    // air port OAK 
-    {
-      latitude: 37.713238,
-      longitude: -122.212191
-    },
-    // coliseum 
-    {
-      latitude: 37.753661,
-      longitude: -122.196869
-    },
     // fruitvale
     {
       latitude: 37.774836,
