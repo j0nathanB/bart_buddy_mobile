@@ -24,6 +24,7 @@ import hardCodedDestinations from './components/destinations';
 import hardCodedStationsList from './components/stations';
 import StationsMenu from './components/stationsmenu';
 import DestinationsMenu from './components/destinationsmenu';
+import Users from './components/users'
 
 console.ignoredYellowBox = ['Warning: BackAndroid'];
 
@@ -76,6 +77,7 @@ export default class bart_buddy_mobile extends Component {
         <Text style={styles.instructions}>
           "Everybody Needs One"
         </Text>
+        <Users />
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>
         <ClosestStation pushToClosestStation={"Powell Street"} />     
         <Bulletin update={"Your train leaving in 3 minutes"} style={styles.bulletinStyle}/>

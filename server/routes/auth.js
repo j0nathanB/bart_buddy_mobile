@@ -88,7 +88,7 @@ router.route('/update')
   });
 
 router.route('/retrieve')
-  .post((req, res) => {
+  .get((req, res) => {
     models.Profile.fetchAll()
       .then(profiles => {
         res.status(200).send(profiles);
