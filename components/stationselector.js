@@ -55,7 +55,7 @@ export default class StationSelector extends Component {
     return (
       <Container>
         <Content padder>
-          <Button onPress={this.testFunction}><Text>STN: {this.state.clicked}</Text></Button>
+          <Button onPress={this.testFunction}><Text>STN: {this.props.parentStation}</Text></Button>
         </Content>
       </Container>
     );

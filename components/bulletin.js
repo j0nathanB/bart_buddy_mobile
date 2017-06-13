@@ -5,29 +5,22 @@ import {
   Text,
   View
 } from 'react-native';
+import { Container, Content, Card, CardItem, Body } from 'native-base';
 
 export default class Bulletin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentBulletin: "Bulletin Text"
-    };
-  }
-  render() {
-    return (
-      <View style={{ padding: 10, flexDirection: 'column'}}>
-       <Text style={styles.bulletinStyle}>
-          Bulletin (Notice): {this.props.update}
-        </Text>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <Container>
+                <Content>
+                    <Card>
+                        <CardItem>
+                          <Body>
+                            <Text>Your text here</Text>
+                          </Body>
+                        </CardItem>
+                    </Card>
+                </Content>
+            </Container>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  bulletinStyle: {
-    textAlign: 'left',
-    color: 'red',
-    marginBottom: 5,
-  },
-});

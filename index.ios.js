@@ -21,11 +21,12 @@ import UseLocationButton from './components/uselocationbutton';
 import ClosestStation from './components/closeststation';
 import Bulletin from './components/bulletin';
 import hardCodedDestinations from './components/destinations';
-import hardCodedStationsList from './components/stations';
+import stationList from './components/station_coordinates';
 import StationsMenu from './components/stationsmenu';
 import DestinationsMenu from './components/destinationsmenu';
 import Users from './components/users'
-
+import StationSelector from  './components/stationselector';
+import RouteSelector from  './components/routeselector';
 import ExperimentalButton from './components/example_button'
  
 console.ignoredYellowBox = ['Warning: BackAndroid'];
@@ -43,7 +44,7 @@ export default class bart_buddy_mobile extends Component {
       lat: 0,
       long: 0,
       isLoading: false,
-      currentStation: hardCodedStationsList[0],
+      currentStation: stationList[0],
       currentRoute: hardCodedDestinations[0],
       schedule: [],
     };
@@ -79,19 +80,43 @@ export default class bart_buddy_mobile extends Component {
   
 
   updateRoute(data) {
-    alert(`Destination: Parent Component = ${data}`);
     this.setState({ currentRoute: data });
-    //this.simplePost(data, this.state.currentStation);
   }
 
   updateStation(data) {
-    alert(`Station: Parent Component = ${data}`);
-    this.setState({ currentStation: data });
-    //this.simplePost(data, this.state.currentStation);
+    this.setState({currentStation: stationList[data]});
   }
 
   getSchedule(station) {
+    let tempSchedule = [];    
+    axios.post('http://localhost:3000/api/schedule', station)   
+    .then(    
+      res => { 
+        if (Array.isArray(res.data.station.etd)) {
+          res.data.station.etd.map(    
+            route => route.estimate.map(    
+              eta => { tempSchedule.push( {minutes: eta.minutes, destination:route.destination} ) }     
+            )     
+          )    
+        } else if (res.data.station.etd.estimate) {
+          res.data.station.etd.estimate.map(    
+              eta => { tempSchedule.push( {minutes: eta.minutes, destination:eta.destination} ) }     
+            )     
+        }
+      }
+    ) 
+    .then( () => {    
+      this.setState({   
+        schedule: tempSchedule    
+      })    
+    })    
+    .catch(err => {   
+      throw err;    
+    });   
+  }   
 
+  componentDidMount() {   
+    setInterval(() => this.getSchedule(this.state.currentStation), 15000)
   }
 
   render() {
@@ -112,10 +137,10 @@ export default class bart_buddy_mobile extends Component {
         </Text>
         <Users />
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>
-        <ClosestStation pushToClosestStation={"Powell Street"} />     
-        <Bulletin update={"Your train leaving in 3 minutes"} style={styles.bulletinStyle}/>
-        <Bulletin update={"Your train leaving in 8 minutes"} style={styles.bulletinStyle}/>
-        <Bulletin update={"Your train leaving in 17 minutes"} style={styles.bulletinStyle}/>
+        <ClosestStation pushToClosestStation={"Powell Street"}/> 
+        <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
+        <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute}/>
+        <Bulletin />
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
