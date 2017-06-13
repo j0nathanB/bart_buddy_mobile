@@ -14,15 +14,18 @@ import {
 import TrainView from './train_view.js';
 
 
+
 export const MapContainer = ({region}) => {
 
 	return (
 		<View style={styles.container}> 
 			<MapView 
-			  provider={MapView.PROVIDER_GOOGLE}
+			  provider={"google"}
 			  style={styles.map}
-			  region={region}
 			  mapType='terrain'
+			  zoomEnabled={true}
+			  showsUserLocation={true}
+			  initialRegion={region}
 			  >
 
 			  {stations.map((x, index) => {
@@ -33,7 +36,7 @@ export const MapContainer = ({region}) => {
 			    />
 			  })}
  	      
- 	      {Dub_Daily.map((x, index) => {
+ 	          {Dub_Daily.map((x, index) => {
 			    return <TrainView 
 			    station_coordinates={x} 
 			    color={"blue"}
