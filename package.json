@@ -1,5 +1,5 @@
 {
-<<<<<<< HEAD
+
 
     "name": "bart_buddy_mobile",
     "version": "0.0.1",
@@ -44,15 +44,14 @@
     },
     "jest": {
         "preset": "react-native"
-    }
-=======
-  "name": "bart_buddy_mobile",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "start_server": "node server/index.js start",
-    "test": "jest"
+    },
+      "name": "bart_buddy_mobile",
+      "version": "0.0.1",
+      "private": true,
+      "scripts": {
+        "start": "node node_modules/react-native/local-cli/cli.js start",
+        "start_server": "node server/index.js start",
+        "test": "jest"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -90,5 +89,5 @@
   "jest": {
     "preset": "react-native"
   }
->>>>>>> trains rendering based on location data
+
 }
