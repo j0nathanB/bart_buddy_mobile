@@ -11,6 +11,11 @@ const styles = {
   map: {
   	height: height * 0.75,
   	width: width
+  },
+  trainInfo: {
+  	
+    height: 80,
+  	width: 100
   }
 };
 

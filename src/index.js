@@ -10,60 +10,36 @@ import {
 	Macarthur_richmond,
   Dub_Daily
   } from "./dailyCity_to_bayfair.js";
-
+import Destination from './train_info.js';
 import TrainView from './train_view.js';
 
 
-export const MapContainer = ({region}) => {
+export const MapContainer = ({region, trains}) => {
+
+
 
 	return (
 		<View style={styles.container}> 
 			<MapView 
-			  provider={MapView.PROVIDER_GOOGLE}
+			  provider={"google"}
 			  style={styles.map}
-			  region={region}
 			  mapType='terrain'
+			  zoomEnabled={true}
+			  initialRegion={region}
+			  showsMyLocationButton={true}
 			  >
-
-			  {stations.map((x, index) => {
+ 	          
+ 	          {trains.map((x, index) => {
 			    return <TrainView 
-			    station_coordinates={x} 
-			    color={"red"}
-			    key={index}
-			    />
-			  })}
- 	      
- 	      {Dub_Daily.map((x, index) => {
-			    return <TrainView 
-			    station_coordinates={x} 
+			    station_coordinates={{
+			    	latitude: x[0], 
+			    	longitude: x[1] 
+			    }} 
 			    color={"blue"}
 			    key={index}
 			    />
 			  })}
 
-			  {Macarthur_richmond.map((x, index) => {
-			    return <TrainView 
-			    station_coordinates={x} 
-			    color={"orange"}
-			    key={index}
-			    />
-			  })}
-
-			  {Macarthur_pitt.map((x, index) => {
-			    return <TrainView 
-			    station_coordinates={x} 
-			    color={"orange"}
-			    key={index}
-			    />
-			  })}
-
-			  {Daily.map((x, index) => {
-			    return <TrainView 
-			    station_coordinates={x} 
-			    color={"orange"}
-			    key={index}
-			    />
-			  })}
 
 			  <MapView.Polyline 
 			    coordinates={stations}

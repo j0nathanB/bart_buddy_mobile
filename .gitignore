@@ -43,6 +43,10 @@ buck-out/
 \.buckd/
 *.keystore
 
+
+dump.rdb
+.env
+
 #Ignore CocoaPods 
 ios/Pods/ 
 ./ios/Pods/ 

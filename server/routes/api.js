@@ -13,15 +13,15 @@ const env = require('dotenv').config();
 
 router.route('/')
     .get((req, res) => {
-        console.log(`>>>>>>>>>> api/`);
-        res.status(200).send('Hello World!');
+      console.log(`>>>>>>>>>> api/`);
+      res.status(200).send('Hello World!');
     })
     .post((req, res) => {
-        console.log('in the correct route');
-        console.log(req.body);
-        res.status(201).send({
-            data: 'Posted!'
-        });
+      console.log('in the correct route');
+      console.log(req.body);
+      res.status(201).send({
+          data: 'Posted!'
+      });
     });
 
 router.route('/closest_station')
@@ -133,28 +133,29 @@ router.route('/getgtfs')
     .get((req, res) => {
         axios.get('http://api.bart.gov/gtfsrt/tripupdate.aspx')
             .then((response) => {
+               
                 var count = 0;
                 var d = new Date();
                 var cur_seconds = d.toTimeString().split(' ')[0].split(':');
                 cur_seconds = (+cur_seconds[0]) * 60 * 60 + (+cur_seconds[1]) * 60 + (+cur_seconds[2]);
 
-                var conform = ByteBuffer.btoa(response.data);
+                // var conform = ByteBuffer.btoa(response.data);
 
-                var feed = GtfsRealtimeBindings.FeedMessage.decode(conform);
-                var someArr = [];
+                // var feed = GtfsRealtimeBindings.FeedMessage.decode(conform);
+                // var someArr = [];
 
-                feed.entity.forEach(function(entity) {
-                    var obj = {}
-                    if (entity.trip_update) {
-                        obj[entity.trip_update.trip.trip_id] = [];
-                        for (var k = 0; k < entity.trip_update.stop_time_update.length; k++) {
-                            obj[entity.trip_update.trip.trip_id].push([entity.trip_update.stop_time_update[k].stop_sequence, entity.trip_update.stop_time_update[k].departure.delay]);
-                        }
-                        someArr.push(obj);
-                    }
-                });
+                // feed.entity.forEach(function(entity) {
+                //     var obj = {}
+                //     if (entity.trip_update) {
+                //         obj[entity.trip_update.trip.trip_id] = [];
+                //         for (var k = 0; k < entity.trip_update.stop_time_update.length; k++) {
+                //             obj[entity.trip_update.trip.trip_id].push([entity.trip_update.stop_time_update[k].stop_sequence, entity.trip_update.stop_time_update[k].departure.delay]);
+                //         }
+                //         someArr.push(obj);
+                //     }
+                // });
 
-                console.log('someArr: ', someArr[0]);
+                // console.log('someArr: ', someArr[0]);
                 if (d.getDay() == 6 || d.getDay() == 0) {
                     if (d.getDay() == 0) {
                         db.select().table('gtfs_schedule').orderBy('id').then((trains) => {
@@ -183,7 +184,7 @@ router.route('/getgtfs')
                                 var finalPoint = [Number(arr[p][4][0]) + Number(toChange[0]), Number(arr[p][4][1]) + Number(toChange[1])];
                                 finalLocations.push(finalPoint);
                             }
-                            res.send(JSON.stringify(finalLocations));
+                            res.send('JSON.stringify(finalLocations)');
                         });
                     }
                 } else {
