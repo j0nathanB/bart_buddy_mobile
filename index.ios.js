@@ -85,13 +85,41 @@ export default class bart_buddy_mobile extends Component {
   }
 
   updateStation(data) {
-    alert(`Station: Parent Component = ${data}`);
-    this.setState({ currentStation: data });
-    //this.simplePost(data, this.state.currentStation);
+    //alert(`Station: Parent Component = ${stationList[data].name}`);
+    this.setState({currentStation: stationList[data]});
   }
 
   getSchedule(station) {
+    //alert("station = " + station);
+    let tempSchedule = [];    
+    axios.post('http://localhost:3000/api/schedule', station)   
+    .then(    
+      res => { 
+        if (Array.isArray(res.data.station.etd)) {
+          res.data.station.etd.map(    
+            route => route.estimate.map(    
+              eta => { tempSchedule.push( {minutes: eta.minutes, destination:route.destination} ) }     
+            )     
+          )    
+        } else if (res.data.station.etd.estimate) {
+          res.data.station.etd.estimate.map(    
+              eta => { tempSchedule.push( {minutes: eta.minutes, destination:eta.destination} ) }     
+            )     
+        }
+      }
+    ) 
+    .then( () => {    
+      this.setState({   
+        schedule: tempSchedule    
+      })    
+    })    
+    .catch(err => {   
+      throw err;    
+    });   
+  }   
 
+  componentDidMount() {   
+    setInterval(() => this.getSchedule(this.state.currentStation), 15000)
   }
 
   render() {
@@ -112,10 +140,17 @@ export default class bart_buddy_mobile extends Component {
         </Text>
         <Users />
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>
+<<<<<<< HEAD
         <ClosestStation pushToClosestStation={"Powell Street"} />     
         <Bulletin update={"Your train leaving in 3 minutes"} style={styles.bulletinStyle}/>
         <Bulletin update={"Your train leaving in 8 minutes"} style={styles.bulletinStyle}/>
         <Bulletin update={"Your train leaving in 17 minutes"} style={styles.bulletinStyle}/>
+=======
+        <ClosestStation pushToClosestStation={"Powell Street"}/> 
+        <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
+        <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute}/>
+        <Bulletin />
+>>>>>>> sync with master repo
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
