@@ -11,16 +11,18 @@ export default class RouteSelector extends Component {
     this.testFunction = this.testFunction.bind(this);
   }
 
+//this.props.routeChoices
+
   testFunction() {
     ActionSheet.show(
             {
-              options: hardCodedDestinations,
+              options: this.props.routeChoices,
               cancelButtonIndex: CANCEL_INDEX,
               destructiveButtonIndex: DESTRUCTIVE_INDEX,
               title: 'Select BART Route'
             },
             (buttonIndex) => {
-              this.setState({ clicked: hardCodedDestinations[buttonIndex] });
+              this.setState({ clicked: this.props.routeChoices[buttonIndex] });
               //alert("stationselector.js: " + this.state.clicked );
               this.props.routeSelectHandler(this.state.clicked);
             });
