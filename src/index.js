@@ -8,16 +8,42 @@ import {
 	Dailycity, 
 	Macarthur_pitt, 
 	Macarthur_richmond,
-  Dub_Daily
+    Dub_Daily
   } from "./dailyCity_to_bayfair.js";
 import Destination from './train_info.js';
 import TrainView from './train_view.js';
 
 
-export const MapContainer = ({region, trains}) => {
+class MapContainer extends React.Component {
+	constructor(props) {
+	  super(props)
+	  this.state = {
+	  	region: this.props.region,
+	  	
+	  }
+	}
 
+	// onRegionChange () {
+	// const region = {
+	// 	latitude: 0,
+	// 	longitude: 0,
+	// 	latitudeDelta: 0.03,
+	 //        longitudeDelta: 0.02
+	 //    }
+	// 	  this.setState({ 
+	// 	  	region,});
+	// }
 
-
+	// handleClick () {
+	// 	this.setState({
+	// 	  lat: 0,
+	// 	  ln: 0
+	// 	})
+	// 	console.log('this is new state:', this.state)
+	// }
+	
+	render () {
+	
 	return (
 		<View style={styles.container}> 
 			<MapView 
@@ -25,11 +51,12 @@ export const MapContainer = ({region, trains}) => {
 			  style={styles.map}
 			  mapType='terrain'
 			  zoomEnabled={true}
-			  initialRegion={region}
+			  initialRegion={this.state.region}
 			  showsMyLocationButton={true}
 			  >
+		
  	          
- 	          {trains.map((x, index) => {
+ 	          {this.props.trains.map((x, index) => {
 			    return <TrainView 
 			    station_coordinates={{
 			    	latitude: x[0], 
@@ -111,7 +138,8 @@ export const MapContainer = ({region, trains}) => {
 
 			</MapView>
 		</View>
-	);
+	  );
+    }
 }
 
 export default MapContainer;

@@ -34,10 +34,10 @@ export default class bart_buddy_mobile extends Component {
     super(props);
     this.state = {
       region: {
-        latitude: 37.774836,
+        latitude: 37.805042,
         longitude: -122.224175,
-        latitudeDelta: 0.3,
-        longitudeDelta: 0.82
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.5
       },
       lat: 0,
       long: 0,
@@ -67,27 +67,33 @@ export default class bart_buddy_mobile extends Component {
       })
   }
 
-  experimentalFunction() {
-    this.setState({
-      region: {
-      latitude: 37.004836,
-      longitude: -122.224175,
-      latitudeDelta: 0.003,
-      longitudeDelta: 0.0082
-      }
-    })
-    alert("index.ios.js: \'Use My Location\' button pressed");
-    //getCurrentPosition((data) => {alert(data)});
-  }
-  
-
   updateRoute(data) {
     this.setState({ currentRoute: data });
   }
+  
+  rendermap(lat, long) {
+    this.setState({
+      region: {
+        latitude: lat,
+        longitude: long,
+        latitudeDelta: 0.03,
+        longitudeDelta: 0.02
+      }
+    })
+  }
 
   updateStation(data) {
-    this.setState({currentStation: stationList[data]});
+    console.log(this.state.region)
+    let lat = JSON.parse(stationList[data].gtfs_latitude);
+    let long = JSON.parse(stationList[data].gtfs_longitude);
+    this.setState({
+      currentStation: stationList[data]
+    });
+    
+    this.rendermap(lat, long);
+   
   }
+
 
   getSchedule(station) {
     let tempSchedule = []; 
@@ -114,21 +120,26 @@ export default class bart_buddy_mobile extends Component {
     });   
   }   
 
-  componentDidMount() {   
-    setInterval(() => this.getSchedule(this.state.currentStation), 15000)
-  }
 
   render() {
+
     return (
       <View style={styles.container}>
-        <MapContainer region={this.state.region} trains={this.state.schedule} />
+        <MapContainer 
+          region={this.state.region} 
+          trains={this.state.schedule} 
+          render={this.rendermap.bind(this)}
+          /> 
         <Users />
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>
         <ClosestStation pushToClosestStation={"Powell Street"}/> 
         <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
         <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>
         <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
+
       </View>
+
+
     );
   }
 }
