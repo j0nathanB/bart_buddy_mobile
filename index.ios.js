@@ -15,7 +15,6 @@ import { Container } from 'native-base';
 
 import MapContainer from './src/index';
 import axios from 'axios';
-import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import UseLocationButton from './components/uselocationbutton';
 import ClosestStation from './components/closeststation';
 import hardCodedDestinations from './components/destinations';
