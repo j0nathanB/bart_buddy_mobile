@@ -8,11 +8,13 @@ import {
 	Dailycity, 
 	Macarthur_pitt, 
 	Macarthur_richmond,
-    Dub_Daily
+    Dub_Daily,
+    Fremont_Daly
   } from "./dailyCity_to_bayfair.js";
 import Destination from './train_info.js';
 import TrainView from './train_view.js';
-import sched from './sched.js';
+import sched from './sched.js'
+
 
 
 class MapContainer extends React.Component {
@@ -20,7 +22,12 @@ class MapContainer extends React.Component {
 	  super(props)
 	  this.state = {
 	  	region: this.props.region,
-	  	newRegion: null
+	  	newRegion: null,
+	  	x: {
+	  	  latitude: 37.552,
+          longitude: -122.466042
+	  	},
+	  	routeCoordinates: Daily
 	  }
 	}
 
@@ -30,21 +37,9 @@ class MapContainer extends React.Component {
 	  })
 	}
 
-	// onRegionChange () {
-	// const region = {
-	// 	latitude: 38.3333333,
-	// 	longitude: -122.0000,
-	// 	latitudeDelta: 0.03,
-	//     longitudeDelta: 0.02
-	//   }
-	//   this.setState({ 
-	//   	newRegion: region,
-	//   });
-	// }
-
 	
 	render () {
-	console.log('Map region coordinates: ', this.state.newRegion)
+	console.log('Map region coordinates: ', this.props.name)
 	return (
 		<View style={styles.container}> 
 			<MapView 
@@ -55,7 +50,7 @@ class MapContainer extends React.Component {
 			  initialRegion={this.state.region}
 			  showsMyLocationButton={true}
 			  region={this.state.newRegion}
-			   
+			  animateToCoordinate={this.state.newRegion}
 			  >
 			 
 			  {this.state.newRegion ? <MapView.Marker 
@@ -63,10 +58,12 @@ class MapContainer extends React.Component {
 			      latitude: this.state.newRegion.latitude, 
 			       longitude:  this.state.newRegion.longitude
 			    }}
-			    image={require('./train_images/station.png')}/> : null}
+			    image={require('./train_images/station.png')}
+			    title={this.props.name.abbr}
+			    description={this.props.name.name}/> : null}
 
- 	          
- 	          {sched.map((x, index) => {
+
+			    {this.props.trains.map((x, index) => {
 			    return <TrainView 
 			    station_coordinates={{
 			    	latitude: x[0], 
@@ -78,26 +75,25 @@ class MapContainer extends React.Component {
 			    />
 			  })}
 
-
 			  <MapView.Polyline 
 			    coordinates={stations}
 			    strokeColor={"blue"}
 			    geoDesic={false}
-			    strokeWidth={9}
+			    strokeWidth={12}
 			  />
 			  
 			  <MapView.Polyline 
 			    coordinates={stations}
 			    strokeColor={"red"}
 			    geoDesic={true}
-			    strokeWidth={7}
+			    strokeWidth={9}
 			  />
 
 			  <MapView.Polyline 
 			    coordinates={stations}
 			    strokeColor={"yellow"}
 			    geoDesic={true}
-			    strokeWidth={5}
+			    strokeWidth={7}
 			  />
 
 			  <MapView.Polyline 
@@ -129,14 +125,22 @@ class MapContainer extends React.Component {
 			    coordinates={Macarthur_richmond}
 			    strokeColor={"orange"}
 			    geoDesic={true}
-			    strokeWidth={5}
+			    strokeWidth={7}
 			  />
 			  <MapView.Polyline 
 			  //displays line from MacArthur to pittsburg 
 			    coordinates={Macarthur_pitt}
 			    strokeColor={"yellow"}
 			    geoDesic={true}
-			    strokeWidth={3}
+			    strokeWidth={4}
+			  />
+
+			  <MapView.Polyline 
+			  //displays line from dublin to west oakland 
+			    coordinates={Fremont_Daly}
+			    strokeColor={"green"}
+			    geoDesic={true}
+			    strokeWidth={4}
 			  />
 
 			  <MapView.Polyline 
@@ -146,6 +150,8 @@ class MapContainer extends React.Component {
 			    geoDesic={true}
 			    strokeWidth={2}
 			  />
+
+			  
 
 			</MapView>
 		</View>

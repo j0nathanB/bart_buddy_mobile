@@ -36,8 +36,8 @@ export default class bart_buddy_mobile extends Component {
       region: {
         latitude: 37.805042,
         longitude: -122.294823,
-        latitudeDelta: 0.2,
-        longitudeDelta: 0.2
+        latitudeDelta: 0.4,
+        longitudeDelta: 0.5
       },
       station: null,
       lat: 0,
@@ -125,7 +125,6 @@ export default class bart_buddy_mobile extends Component {
 
   render() {
 
-
     return (
 
       <View style={styles.container}>
@@ -133,7 +132,6 @@ export default class bart_buddy_mobile extends Component {
           region={this.state.region} 
           trains={this.state.schedule} 
           render={this.rendermap.bind(this)}
-
           /> 
         <Users />
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>

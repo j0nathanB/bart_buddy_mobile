@@ -123,6 +123,47 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
         </MapView.Callout>
       </MapView.Marker>
      );
+   } else if ( color === "339933" ) {
+     
+     let direction
+      if ( route === "Daly City" ) {
+          direction = "West";
+      } else {
+          direction = "East";
+      }
+
+     return (
+      <MapView.Marker 
+        coordinate={station_coordinates}
+        image={require('./train_images/greenTrain.png')}
+      >
+      <MapView.Callout >
+        <Destination Direction={direction} 
+        Route={route} 
+        time_to_next_station={'100 minutes'}  />
+        </MapView.Callout>
+      </MapView.Marker>
+     );
+   } else if ( color === "ff0000" ) {
+    let direction
+      if ( route === "Millbrae" ) {
+          direction = "South";
+      } else {
+          direction = "North";
+      }
+
+     return (
+      <MapView.Marker 
+        coordinate={station_coordinates}
+        image={require('./train_images/redTrain.png')}
+      >
+      <MapView.Callout >
+        <Destination Direction={direction} 
+        Route={route} 
+        time_to_next_station={'100 minutes'}  />
+        </MapView.Callout>
+      </MapView.Marker>
+     );
    } else if ( color === "000000" ) {
        
       let direction;
@@ -185,25 +226,38 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             </MapView.Marker>
            );
         } else {
-
-
-        return (
+          return (
         <MapView.Marker 
           coordinate={station_coordinates}
           image={require('./train_images/redTrain.png')}
         >
         <MapView.Callout >
-          <Destination Direction={direction} 
+          <Destination Direction={"direction"} 
           Route={route} 
           time_to_next_station={'100 minutes'}  />
           </MapView.Callout>
         </MapView.Marker>
        );
       }
-   }
+   } else {
+        return (
+        <MapView.Marker 
+          coordinate={station_coordinates}
+          image={require('./train_images/redTrain.png')}
+        >
+        <MapView.Callout >
+          <Destination Direction={"direction"} 
+          Route={route} 
+          time_to_next_station={'100 minutes'}  />
+          </MapView.Callout>
+        </MapView.Marker>
+       );
+      }
 }
 
 export default TrainView;
+
+
 
 
 

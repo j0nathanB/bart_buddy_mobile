@@ -13,7 +13,6 @@ const styles = {
   	width: width
   },
   trainInfo: {
-  	
     height: 80,
   	width: 100
   }
