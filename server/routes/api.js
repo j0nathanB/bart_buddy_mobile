@@ -64,45 +64,49 @@ router.route('/advisory')
 
 
 router.route('/schedule')
-    .post((req, res) => {
-        let schedules = [];
+  .post((req, res) => {
+    let schedules = [];
+    let stationObj = {
+      station: req.body.abbr
+    };
+    let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationObj.station}&key=QQZR-5GY8-99PT-DWE9`;
 
-        let stationObj = {
-            station: req.body.abbr
-        };
+    axios.get(url)
+      .then((result) => {
+        var json = parser.toJson(result.data);
+        let data = JSON.parse(json);
+        let timeTables = [];
 
-        let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationObj.station}&key=QQZR-5GY8-99PT-DWE9`;
+        Array.isArray(data.root.station.etd) ? 
+          timeTables = data.root.station.etd :
+          timeTables.push(data.root.station.etd)
 
-        axios.get(url)
-            .then((result) => {
-                var json = parser.toJson(result.data);
-                let data = JSON.parse(json);
-
-                data.root.station.etd.map(
-                    route => {
-                        if (Array.isArray(route.estimate)) {
-                            route.estimate.map(
-                                eta => {
-                                    schedules.push({
-                                        minutes: eta.minutes,
-                                        destination: route.destination
-                                    })
-                                }
-                            )
-                        } else {
-                            schedules.push({
-                                minutes: route.estimate.minutes,
-                                destination: route.destination
-                            })
-                        }
-                    }
-                );
-                res.send(schedules);
-            })
-            .catch((err) => {
-                console.log('Error in api/schedule: ', err.message);
-            });
+        timeTables.map(
+          route => {
+            if (Array.isArray(route.estimate)) {
+              route.estimate.map(
+                eta => {
+                  schedules.push({
+                    minutes: eta.minutes,
+                    destination: route.destination
+                  })
+                }
+              )
+            } else {
+              schedules.push({
+                minutes: route.estimate.minutes,
+                destination: route.destination
+              })
+            }
+          }
+        );
+        
+        res.send(schedules);
+    })
+    .catch((err) => {
+        console.log('Error in api/schedule: ', err.message);
     });
+  });
 
 router.route('/getgtfs')
   .get((req, res) => {
