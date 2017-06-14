@@ -9,7 +9,7 @@ var ByteBuffer = require('bytebuffer');
 const db = require('knex')(require('../../knexfile.js')); //change knexfile location accordingly
 const config = require('config');
 const env = require('dotenv').config();
-
+const fetch = require('node-fetch');
 
 router.route('/')
     .get((req, res) => {
@@ -252,7 +252,7 @@ router.route('/getgtfs')
                       ]);
                       for (var g = 0; g < editStuff.length; g++) {
                         if (editStuff[g].trip_id === editStuff[i].trip_id && editStuff[g].stop_sequence === 1) {
-                          //console.log('yo yo yo yo in here');
+                          console.log('yo yo yo yo in here');
                           if (editStuff[g].hex_color !== null) {
                             arr[arr.length - 1].push(editStuff[g].hex_color);
                           } else {

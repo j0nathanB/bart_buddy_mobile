@@ -35,10 +35,11 @@ export default class bart_buddy_mobile extends Component {
     this.state = {
       region: {
         latitude: 37.805042,
-        longitude: -122.224175,
-        latitudeDelta: 0.5,
-        longitudeDelta: 0.5
+        longitude: -122.294823,
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.2
       },
+      station: null,
       lat: 0,
       long: 0,
       isLoading: false,
@@ -55,9 +56,9 @@ export default class bart_buddy_mobile extends Component {
   }
 
   componentWillMount() {
+   
     axios.get('http://localhost:1337/api/getgtfs')
       .then((data) => {
-        console.log(data.data)
         this.setState({
           schedule: data.data
         })
@@ -65,6 +66,7 @@ export default class bart_buddy_mobile extends Component {
       .catch(err => {
         console.log('error on the front: ', err)
       })
+
   }
 
   updateRoute(data) {
@@ -76,8 +78,8 @@ export default class bart_buddy_mobile extends Component {
       region: {
         latitude: lat,
         longitude: long,
-        latitudeDelta: 0.03,
-        longitudeDelta: 0.02
+        latitudeDelta: 0.093,
+        longitudeDelta: 0.092
       }
     })
   }
@@ -123,12 +125,15 @@ export default class bart_buddy_mobile extends Component {
 
   render() {
 
+
     return (
+
       <View style={styles.container}>
         <MapContainer 
           region={this.state.region} 
           trains={this.state.schedule} 
           render={this.rendermap.bind(this)}
+
           /> 
         <Users />
         <UseLocationButton UseLocationButtonProps={"Determine my station"}/>
@@ -137,9 +142,8 @@ export default class bart_buddy_mobile extends Component {
         <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>
         <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
 
+
       </View>
-
-
     );
   }
 }

@@ -12,6 +12,7 @@ import {
   } from "./dailyCity_to_bayfair.js";
 import Destination from './train_info.js';
 import TrainView from './train_view.js';
+import sched from './sched.js';
 
 
 class MapContainer extends React.Component {
@@ -19,31 +20,31 @@ class MapContainer extends React.Component {
 	  super(props)
 	  this.state = {
 	  	region: this.props.region,
-	  	
+	  	newRegion: null
 	  }
+	}
+
+	componentWillReceiveProps(props) {
+	  this.setState({
+	  	newRegion: props.region,
+	  })
 	}
 
 	// onRegionChange () {
 	// const region = {
-	// 	latitude: 0,
-	// 	longitude: 0,
+	// 	latitude: 38.3333333,
+	// 	longitude: -122.0000,
 	// 	latitudeDelta: 0.03,
-	 //        longitudeDelta: 0.02
-	 //    }
-	// 	  this.setState({ 
-	// 	  	region,});
+	//     longitudeDelta: 0.02
+	//   }
+	//   this.setState({ 
+	//   	newRegion: region,
+	//   });
 	// }
 
-	// handleClick () {
-	// 	this.setState({
-	// 	  lat: 0,
-	// 	  ln: 0
-	// 	})
-	// 	console.log('this is new state:', this.state)
-	// }
 	
 	render () {
-	
+	console.log('Map region coordinates: ', this.state.newRegion)
 	return (
 		<View style={styles.container}> 
 			<MapView 
@@ -53,16 +54,26 @@ class MapContainer extends React.Component {
 			  zoomEnabled={true}
 			  initialRegion={this.state.region}
 			  showsMyLocationButton={true}
+			  region={this.state.newRegion}
+			   
 			  >
-		
+			 
+			  {this.state.newRegion ? <MapView.Marker 
+			    coordinate={{
+			      latitude: this.state.newRegion.latitude, 
+			       longitude:  this.state.newRegion.longitude
+			    }}
+			    image={require('./train_images/station.png')}/> : null}
+
  	          
- 	          {this.props.trains.map((x, index) => {
+ 	          {sched.map((x, index) => {
 			    return <TrainView 
 			    station_coordinates={{
 			    	latitude: x[0], 
 			    	longitude: x[1] 
 			    }} 
-			    color={"blue"}
+			    route={x[2]}
+			    color={x[3]}
 			    key={index}
 			    />
 			  })}
