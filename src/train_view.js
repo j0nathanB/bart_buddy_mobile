@@ -170,6 +170,7 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
      
         if ( route === "Richmond" ) {
           direction = "East";
+        
           return (
             <MapView.Marker 
               coordinate={station_coordinates}
@@ -182,9 +183,11 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
               </MapView.Callout>
             </MapView.Marker>
            );
+        
 
         } else if ( route === "Dublin/Pleasanton" ) {
-          direction = "West";
+          
+          direction = "East";
           return (
             <MapView.Marker 
               coordinate={station_coordinates}
@@ -198,7 +201,7 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             </MapView.Marker>
            );
         } else if ( route === "Pittsburg/Bay Point" ) {
-          direction = "West";
+          direction = "East";
           return (
             <MapView.Marker 
               coordinate={station_coordinates}
@@ -212,7 +215,7 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             </MapView.Marker>
            );
         } else if ( route === "Warm Springs/South Fremont") {
-          direction = "West";
+          direction = "South";
           return (
             <MapView.Marker 
               coordinate={station_coordinates}
@@ -226,6 +229,7 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             </MapView.Marker>
            );
         } else {
+          
           return (
         <MapView.Marker 
           coordinate={station_coordinates}
@@ -243,7 +247,7 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
         return (
         <MapView.Marker 
           coordinate={station_coordinates}
-          image={require('./train_images/redTrain.png')}
+          image={require('./train_images/beigeTrain.png')}
         >
         <MapView.Callout >
           <Destination Direction={"direction"} 
@@ -252,7 +256,7 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
           </MapView.Callout>
         </MapView.Marker>
        );
-      }
+   }
 }
 
 export default TrainView;

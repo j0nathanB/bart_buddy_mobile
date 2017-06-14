@@ -23,11 +23,7 @@ class MapContainer extends React.Component {
 	  this.state = {
 	  	region: this.props.region,
 	  	newRegion: null,
-	  	x: {
-	  	  latitude: 37.552,
-          longitude: -122.466042
-	  	},
-	  	routeCoordinates: Daily
+	  	
 	  }
 	}
 

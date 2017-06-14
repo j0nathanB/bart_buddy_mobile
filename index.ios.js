@@ -40,6 +40,8 @@ export default class bart_buddy_mobile extends Component {
         longitudeDelta: 0.5
       },
       station: null,
+      
+      train: [],
       lat: 0,
       long: 0,
       isLoading: false,
@@ -60,7 +62,7 @@ export default class bart_buddy_mobile extends Component {
     axios.get('http://localhost:1337/api/getgtfs')
       .then((data) => {
         this.setState({
-          schedule: data.data
+          train: data.data
         })
       })
       .catch(err => {
@@ -130,7 +132,8 @@ export default class bart_buddy_mobile extends Component {
       <View style={styles.container}>
         <MapContainer 
           region={this.state.region} 
-          trains={this.state.schedule} 
+          name={this.state.currentStation}
+          trains={this.state.train} 
           render={this.rendermap.bind(this)}
           /> 
         <Users />
