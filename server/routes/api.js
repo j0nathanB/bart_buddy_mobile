@@ -130,101 +130,159 @@ router.route('/schedule')
     });
 
 router.route('/getgtfs')
-    .get((req, res) => {
-        axios.get('http://api.bart.gov/gtfsrt/tripupdate.aspx')
-            .then((response) => {
-               
-                var count = 0;
-                var d = new Date();
-                var cur_seconds = d.toTimeString().split(' ')[0].split(':');
-                cur_seconds = (+cur_seconds[0]) * 60 * 60 + (+cur_seconds[1]) * 60 + (+cur_seconds[2]);
+  .get((req, res) => {
+    var promises = [];
+    var changed = [];
+      fetch('http://api.bart.gov/gtfsrt/tripupdate.aspx', {method:'GET', encoding:null})
+      .then((response) => {
+        if (response.body._readableState.buffer.tail) {
+          promises = [];
+      
+          var d = new Date();
+          var cur_seconds = d.toTimeString().split(' ')[0].split(':');
+          cur_seconds = (+cur_seconds[0]) * 60 * 60 + (+cur_seconds[1]) * 60 + (+cur_seconds[2]);
 
-                // var conform = ByteBuffer.btoa(response.data);
+          var count = 0;
 
-                // var feed = GtfsRealtimeBindings.FeedMessage.decode(conform);
-                // var someArr = [];
+          var conform = ByteBuffer.btoa(response.body._readableState.buffer.tail.data);
+          //var newConform = ByteBuffer.btoa(response.body._readableState.buffer.head.data);
 
-                // feed.entity.forEach(function(entity) {
-                //     var obj = {}
-                //     if (entity.trip_update) {
-                //         obj[entity.trip_update.trip.trip_id] = [];
-                //         for (var k = 0; k < entity.trip_update.stop_time_update.length; k++) {
-                //             obj[entity.trip_update.trip.trip_id].push([entity.trip_update.stop_time_update[k].stop_sequence, entity.trip_update.stop_time_update[k].departure.delay]);
-                //         }
-                //         someArr.push(obj);
-                //     }
-                // });
+          var feed = GtfsRealtimeBindings.FeedMessage.decode(conform);
+          //var newFeed = GtfsRealtimeBindings.FeedMessage.decode(newConform);
+          //console.log('feed: ', feed.entity[0]);
+          //console.log('newFeed: ', newFeed);
+          var someArr = [];
 
-                // console.log('someArr: ', someArr[0]);
-                if (d.getDay() == 6 || d.getDay() == 0) {
-                    if (d.getDay() == 0) {
-                        db.select().table('gtfs_schedule').orderBy('id').then((trains) => {
-                            var arr = [];
-                            console.log('fullength: ', trains.length);
-                            var editStuff = trains.filter(function(item) {
-                                return (item.trip_id.slice(item.trip_id.length - 3) === 'SAT');
-                            });
-                            console.log('edited: ', editStuff.length);
-                            console.log('checkedit: ', editStuff[0]);
-                            for (var i = 0; i < editStuff.length - 1; i++) {
-                                //console.log('check docs: ', editStuff[i]);
-                                if (editStuff[i].trip_id === editStuff[i + 1].trip_id) {
-                                    if (cur_seconds >= editStuff[i].arrival_time && cur_seconds < editStuff[i + 1].arrival_time) {
-                                        arr.push([editStuff[i + 1].trip_id, (cur_seconds - editStuff[i].arrival_time) / (editStuff[i + 1].arrival_time - editStuff[i].arrival_time), editStuff[i].stop_id, editStuff[i + 1].stop_id, [editStuff[i].stop_lat, editStuff[i].stop_lon],
-                                            [editStuff[i + 1].stop_lat, editStuff[i + 1].stop_lon]
-                                        ]);
-                                    }
-                                }
-                            }
+          feed.entity.forEach(function(entity) {
+            var obj = {}
+            if (entity.trip_update) {
+              obj[entity.trip_update.trip.trip_id] = [];
+              for (var k = 0; k < entity.trip_update.stop_time_update.length; k++) {
+                obj[entity.trip_update.trip.trip_id].push([entity.trip_update.stop_time_update[k].stop_sequence, entity.trip_update.stop_time_update[k].departure.delay]);
+              }
+              someArr.push(obj);
+            }
+          });
 
-                            var dist = Math.sqrt(Math.pow(arr[0][5][0] - arr[0][4][0], 2) + Math.pow(arr[0][5][1] - arr[0][4][1], 2));
-                            var finalLocations = [];
-                            for (var p = 0; p < arr.length; p++) {
-                                var toChange = [(arr[p][5][0] - arr[p][4][0]) * arr[p][1], (arr[p][5][1] - arr[p][4][1]) * arr[p][1]];
-                                var finalPoint = [Number(arr[p][4][0]) + Number(toChange[0]), Number(arr[p][4][1]) + Number(toChange[1])];
-                                finalLocations.push(finalPoint);
-                            }
-                            res.send('JSON.stringify(finalLocations)');
-                        });
-                    }
-                } else {
-                    db.select().table('gtfs_schedule').orderBy('id').then((stuff) => {
-                        var arr = [];
-                        var editStuff = stuff.filter(function(item) {
-                            if (item.trip_id.slice(item.trip_id.length - 3) === 'SAT' || item.trip_id.slice(item.trip_id.length - 3) === 'SUN') {
-                                return false;
-                            }
-                            return true;
-                        });
+          var tempChanged = [];
+          var tempPromises = [];
+         // db.select().table('gtfs_schedule').where({'trip_id': '41DC11', 'stop_sequence': 5}).then((result) => {console.log(result)});
 
-                        for (var i = 0; i < editStuff.length - 1; i++) {
-                            //console.log('check docs: ', editStuff[i]);
-                            if (editStuff[i].trip_id === editStuff[i + 1].trip_id) {
-                                if (cur_seconds >= editStuff[i].arrival_time && cur_seconds < editStuff[i + 1].arrival_time) {
-                                    arr.push([editStuff[i + 1].trip_id, (cur_seconds - editStuff[i].arrival_time) / (editStuff[i + 1].arrival_time - editStuff[i].arrival_time), editStuff[i].stop_id, editStuff[i + 1].stop_id, [editStuff[i].stop_lat, editStuff[i].stop_lon],
-                                        [editStuff[i + 1].stop_lat, editStuff[i + 1].stop_lon]
-                                    ]);
-                                }
-                            }
-                        }
-
-                        var dist = Math.sqrt(Math.pow(arr[0][5][0] - arr[0][4][0], 2) + Math.pow(arr[0][5][1] - arr[0][4][1], 2));
-                        var finalLocations = [];
-
-                        for (var p = 0; p < arr.length; p++) {
-                            var toChange = [(arr[p][5][0] - arr[p][4][0]) * arr[p][1], (arr[p][5][1] - arr[p][4][1]) * arr[p][1]];
-                            var finalPoint = [Number(arr[p][4][0]) + Number(toChange[0]), Number(arr[p][4][1]) + Number(toChange[1])];
-                            finalLocations.push(finalPoint);
-                        }
-
-                        res.send(JSON.stringify(finalLocations));
-                    });
+          for (var v = 0; v < someArr.length; v++) {
+            for (var key in someArr[v]) {
+              for (var z = 0; z < someArr[v][key].length; z++) {
+                if (someArr[v][key][z][1] > 0) {
+                  tempChanged.push(db.select().table('gtfs_schedule').where({'trip_id': key, 'stop_sequence':  someArr[v][key][z][0]}));
+                  tempPromises.push(db('gtfs_schedule').where({'trip_id': key, 'stop_sequence': someArr[v][key][z][0]}).increment('arrival_time', someArr[v][key][z][1]));
+                  tempPromises.push(db('gtfs_schedule').where({'trip_id': key, 'stop_sequence': someArr[v][key][z][0]}).increment('departure_time', someArr[v][key][z][1]));
                 }
-            })
-            .catch((err) => {
-                console.log('error: ', err)
-            });
+              }
+            }
+          }
 
-    })
+          Promise.all(tempChanged).then((original) => {
+            changed = original;
+          }).then(() => {
+            Promise.all(tempPromises).then((updated) => {
+              promises = updated;
+              console.log('myPromise: ', promises[0]);
+              console.log('theOriginal: ', changed[0]);
+            });
+          }).then(() => {
+            //console.log('someArr[0]: ', someArr[0]);
+            if (d.getDay() == 6 || d.getDay() == 0) {
+              if (d.getDay() == 0) {
+                db.select().table('gtfs_schedule').orderBy('id').then((trains) => {
+                  var arr = [];
+                  console.log('fullength: ', trains.length);
+
+                  var editStuff = trains.filter(function(item) {
+                    return (item.trip_id.slice(item.trip_id.length - 3) === 'SAT');
+                  });
+
+                  console.log('edited: ', editStuff.length);
+                  console.log('checkedit: ', editStuff[0]);
+
+                  for (var i = 0; i < editStuff.length - 1; i++) {
+                    //console.log('check docs: ', editStuff[i]);
+                    if (editStuff[i].trip_id === editStuff[i + 1].trip_id) {
+                      if (cur_seconds >= editStuff[i].arrival_time && cur_seconds < editStuff[i + 1].arrival_time) {
+                        arr.push([editStuff[i + 1].trip_id, (cur_seconds - editStuff[i].arrival_time) / (editStuff[i + 1].arrival_time - editStuff[i].arrival_time), editStuff[i].stop_id, editStuff[i + 1].stop_id, [editStuff[i].stop_lat, editStuff[i].stop_lon],
+                          [editStuff[i + 1].stop_lat, editStuff[i + 1].stop_lon]
+                        ]);
+                      }
+                    }
+                  }
+
+                  //var dist = Math.sqrt(Math.pow(arr[0][5][0] - arr[0][4][0], 2) + Math.pow(arr[0][5][1] - arr[0][4][1], 2));
+                  var finalLocations = [];
+
+                  for (var p = 0; p < arr.length; p++) {
+                    var toChange = [(arr[p][5][0] - arr[p][4][0]) * arr[p][1], (arr[p][5][1] - arr[p][4][1]) * arr[p][1]];
+                    var finalPoint = [Number(arr[p][4][0]) + Number(toChange[0]), Number(arr[p][4][1]) + Number(toChange[1])];
+                    finalLocations.push(finalPoint);
+                  }
+                  res.send(JSON.stringify(finalLocations));
+                });
+              }
+            } else {
+              db.select().table('gtfs_schedule').orderBy('id').then((stuff) => {    
+                console.log('inside man');
+                var arr = [];
+
+                var editStuff = stuff.filter(function(item) {
+                  if (item.trip_id.slice(item.trip_id.length - 3) === 'SAT' || item.trip_id.slice(item.trip_id.length - 3) === 'SUN') {
+                    return false;
+                  }
+                  return true;
+                });
+                // var moreEdits = [];
+                // for (var g = 0; g < editStuff.length; g++) {
+                //   console.log('g_unit: ', g);
+                //   moreEdits.push(db.select('hex_color', 'trip_id').table('gtfs_schedule').where({'trip_id': editStuff[g].trip_id, 'stop_sequence': 1}));
+                // }
+                console.log("I'm outside -g");
+                //console.log('colors: ', colors);
+                for (var i = 0; i < editStuff.length - 1; i++) {
+                  //console.log('check docs: ', editStuff[i]);
+                  if (editStuff[i].trip_id === editStuff[i + 1].trip_id) {
+                    if (cur_seconds >= editStuff[i].arrival_time && cur_seconds < editStuff[i + 1].arrival_time) {
+                      arr.push([editStuff[i + 1].trip_id, (cur_seconds - editStuff[i].arrival_time) / (editStuff[i + 1].arrival_time - editStuff[i].arrival_time), editStuff[i].stop_id, editStuff[i + 1].stop_id, [editStuff[i].stop_lat, editStuff[i].stop_lon],
+                        [editStuff[i + 1].stop_lat, editStuff[i + 1].stop_lon], editStuff[i].stop_headsign
+                      ]);
+                      for (var g = 0; g < editStuff.length; g++) {
+                        if (editStuff[g].trip_id === editStuff[i].trip_id && editStuff[g].stop_sequence === 1) {
+                          //console.log('yo yo yo yo in here');
+                          if (editStuff[g].hex_color !== null) {
+                            arr[arr.length - 1].push(editStuff[g].hex_color);
+                          } else {
+                            arr[arr.length - 1].push('000000');
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                console.log('aTest: ', arr[0]);
+                //var dist = Math.sqrt(Math.pow(arr[0][5][0] - arr[0][4][0], 2) + Math.pow(arr[0][5][1] - arr[0][4][1], 2));
+                var finalLocations = [];
+
+                for (var p = 0; p < arr.length; p++) {
+                  var toChange = [(arr[p][5][0] - arr[p][4][0]) * arr[p][1], (arr[p][5][1] - arr[p][4][1]) * arr[p][1]];
+                  var finalPoint = [Number(arr[p][4][0]) + Number(toChange[0]), Number(arr[p][4][1]) + Number(toChange[1]), arr[p][6], arr[p][7]];
+                  finalLocations.push(finalPoint);
+                }
+                res.send(finalLocations);
+              });
+            }
+          });
+        } else {
+          res.send('Nothing yet, bro');
+        }
+      })
+      .catch((err) => {
+        console.log('error: ', err)
+      });
+  })
 
 module.exports = router;
