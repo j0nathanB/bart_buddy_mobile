@@ -15,9 +15,6 @@ import TrainView from './train_view.js';
 
 
 export const MapContainer = ({region, trains}) => {
-
-
-
 	return (
 		<View style={styles.container}> 
 			<MapView 
@@ -27,90 +24,88 @@ export const MapContainer = ({region, trains}) => {
 			  zoomEnabled={true}
 			  initialRegion={region}
 			  showsMyLocationButton={true}
-			  >
+			>
  	          
- 	          {trains.map((x, index) => {
-			    return <TrainView 
-			    station_coordinates={{
-			    	latitude: x[0], 
-			    	longitude: x[1] 
-			    }} 
-			    color={"blue"}
-			    key={index}
-			    />
-			  })}
+      {trains.map((x, index) => {
+        return <TrainView 
+          station_coordinates={{
+            latitude: x[0], 
+            longitude: x[1] 
+          }} 
+          color={"blue"}
+          key={index}
+          />
+      })}
 
+      <MapView.Polyline 
+        coordinates={stations}
+        strokeColor={"blue"}
+        geoDesic={false}
+        strokeWidth={9}
+      />
+      
+      <MapView.Polyline 
+        coordinates={stations}
+        strokeColor={"red"}
+        geoDesic={true}
+        strokeWidth={7}
+      />
 
-			  <MapView.Polyline 
-			    coordinates={stations}
-			    strokeColor={"blue"}
-			    geoDesic={false}
-			    strokeWidth={9}
-			  />
-			  
-			  <MapView.Polyline 
-			    coordinates={stations}
-			    strokeColor={"red"}
-			    geoDesic={true}
-			    strokeWidth={7}
-			  />
+      <MapView.Polyline 
+        coordinates={stations}
+        strokeColor={"yellow"}
+        geoDesic={true}
+        strokeWidth={5}
+      />
 
-			  <MapView.Polyline 
-			    coordinates={stations}
-			    strokeColor={"yellow"}
-			    geoDesic={true}
-			    strokeWidth={5}
-			  />
+      <MapView.Polyline 
+        // displays trains between west oakland and daily city 
+        coordinates={stations}
+        strokeColor={"green"}
+        geoDesic={true}
+        strokeWidth={3}
+      />
 
-			  <MapView.Polyline 
-			    // displays trains between west oakland and daily city 
-			    coordinates={stations}
-			    strokeColor={"green"}
-			    geoDesic={true}
-			    strokeWidth={3}
-			  />
+      <MapView.Polyline 
+        // displays line from daily city to milbrea
+        coordinates={Dailycity}
+        strokeColor={"red"}
+        strokeWidth={5}
+        lineDashPattern={[5, 2, 3, 2]}
+      />
 
-			  <MapView.Polyline 
-			    // displays line from daily city to milbrea
-			    coordinates={Dailycity}
-			    strokeColor={"red"}
-			    strokeWidth={5}
-			    lineDashPattern={[5, 2, 3, 2]}
-			  />
+      <MapView.Polyline 
+      // displays line from daily city to SFO to Milbrea
+        coordinates={Daily}
+        strokeColor={"yellow"}
+        geoDesic={true}
+        strokeWidth={2}
+      />
+      
+      <MapView.Polyline 
+      //displays line from Warm spirngs to Richmond
+        coordinates={Macarthur_richmond}
+        strokeColor={"orange"}
+        geoDesic={true}
+        strokeWidth={5}
+      />
+      <MapView.Polyline 
+      //displays line from MacArthur to pittsburg 
+        coordinates={Macarthur_pitt}
+        strokeColor={"yellow"}
+        geoDesic={true}
+        strokeWidth={3}
+      />
 
-			  <MapView.Polyline 
-			  // displays line from daily city to SFO to Milbrea
-			    coordinates={Daily}
-			    strokeColor={"yellow"}
-			    geoDesic={true}
-			    strokeWidth={2}
-			  />
-			  
-			  <MapView.Polyline 
-			  //displays line from Warm spirngs to Richmond
-			    coordinates={Macarthur_richmond}
-			    strokeColor={"orange"}
-			    geoDesic={true}
-			    strokeWidth={5}
-			  />
-			  <MapView.Polyline 
-			  //displays line from MacArthur to pittsburg 
-			    coordinates={Macarthur_pitt}
-			    strokeColor={"yellow"}
-			    geoDesic={true}
-			    strokeWidth={3}
-			  />
-
-			  <MapView.Polyline 
-			  //displays line from dublin to west oakland 
-			    coordinates={Dub_Daily}
-			    strokeColor={"blue"}
-			    geoDesic={true}
-			    strokeWidth={2}
-			  />
-
-			</MapView>
-		</View>
+      <MapView.Polyline 
+      //displays line from dublin to west oakland 
+        coordinates={Dub_Daily}
+        strokeColor={"blue"}
+        geoDesic={true}
+        strokeWidth={2}
+      />
+    </MapView>
+  </View>
 	);
 }
 
