@@ -9,6 +9,7 @@ var ByteBuffer = require('bytebuffer');
 const db = require('knex')(require('../../knexfile.js')); //change knexfile location accordingly
 const config = require('config');
 const env = require('dotenv').config();
+const fetch = require('node-fetch');
 
 
 router.route('/')
@@ -45,47 +46,21 @@ router.route('/closest_station')
 
     });
 
-//this is used for getting station longitude and latitude
-router.route('/get_stations')
-    .get((req, res) => {
 
-        let url = `http://api.bart.gov/api/stn.aspx?cmd=stns&key=QQZR-5GY8-99PT-DWE9`;
-        axios.get(url)
-            .then((result) => {
-                console.log('I am working from inside get_stations');
-                var json = parser.toJson(result.data);
-                let data = JSON.parse(json);
-                let newArray = [];
-                data.root.stations.station.forEach((x) => {
-                        newArray.push([parseFloat(x.gtfs_longitude), parseFloat(x.gtfs_latitude)])
-                    })
-                    //console.log(newArray)
-                res.send(newArray);
-            })
-            .catch((err) => {
-                console.log('error from bart api: ', err.message);
-            });
-    });
+router.route('/advisory')
+  .get((req, res) => {
+    let url = `http://api.bart.gov/api/bsa.aspx?cmd=bsa&orig=all&key=QQZR-5GY8-99PT-DWE9`;
 
-router.route('/station_advisory')
-    .post((req, res) => {
-
-        let stationObj = {
-            station: 'LAKE'
-        };
-
-        let url = `http://api.bart.gov/api/bsa.aspx?cmd=bsa&orig=${stationObj.station}&key=QQZR-5GY8-99PT-DWE9`;
-        axios.get(url)
-            .then((result) => {
-                console.log('I am working from inside station_advisory');
-                var json = parser.toJson(result.data);
-                let data = JSON.parse(json);
-                res.send(data);
-            })
-            .catch((err) => {
-                console.log('error from bart api: ', err.message);
-            });
-    });
+    axios.get(url)
+      .then((result) => {
+        var json = parser.toJson(result.data);
+        let data = JSON.parse(json);
+        res.send(data);
+      })
+      .catch((err) => {
+        console.log('error from /advisory: ', err.message);
+      });
+  });
 
 
 router.route('/schedule')
