@@ -8,16 +8,32 @@ import {
 	Dailycity, 
 	Macarthur_pitt, 
 	Macarthur_richmond,
-  Dub_Daily
+    Dub_Daily,
+    Fremont_Daly
   } from "./dailyCity_to_bayfair.js";
 import Destination from './train_info.js';
 import TrainView from './train_view.js';
+import sched from './sched.js';
 
+class MapContainer extends React.Component {
+	constructor(props) {
+	  super(props)
+	  this.state = {
+	  	region: this.props.region,
+	  	newRegion: null,
+	  	
+	  }
+	}
 
-export const MapContainer = ({region, trains}) => {
+	componentWillReceiveProps(props) {
+	  this.setState({
+	  	newRegion: props.region,
+	  })
+	}
 
-
-
+	
+	render () {
+	console.log('Map region coordinates: ', this.props.name)
 	return (
 		<View style={styles.container}> 
 			<MapView 
@@ -25,41 +41,53 @@ export const MapContainer = ({region, trains}) => {
 			  style={styles.map}
 			  mapType='terrain'
 			  zoomEnabled={true}
-			  initialRegion={region}
+			  initialRegion={this.state.region}
 			  showsMyLocationButton={true}
+			  region={this.state.newRegion}
+			  animateToCoordinate={this.state.newRegion}
 			  >
- 	          
- 	          {trains.map((x, index) => {
+			 
+			  {this.state.newRegion ? <MapView.Marker 
+			    coordinate={{
+			      latitude: this.state.newRegion.latitude, 
+			       longitude:  this.state.newRegion.longitude
+			    }}
+			    image={require('./train_images/station.png')}
+			    title={this.props.name.abbr}
+			    description={this.props.name.name}/> : null}
+
+
+			    {this.props.trainTime.map((x, index) => {
 			    return <TrainView 
 			    station_coordinates={{
 			    	latitude: x[0], 
 			    	longitude: x[1] 
 			    }} 
-			    color={"blue"}
+			    route={x[2]}
+			    color={x[3]}
 			    key={index}
 			    />
 			  })}
-
 
 			  <MapView.Polyline 
 			    coordinates={stations}
 			    strokeColor={"blue"}
 			    geoDesic={false}
-			    strokeWidth={9}
+			    strokeWidth={12}
 			  />
 			  
 			  <MapView.Polyline 
 			    coordinates={stations}
 			    strokeColor={"red"}
 			    geoDesic={true}
-			    strokeWidth={7}
+			    strokeWidth={9}
 			  />
 
 			  <MapView.Polyline 
 			    coordinates={stations}
 			    strokeColor={"yellow"}
 			    geoDesic={true}
-			    strokeWidth={5}
+			    strokeWidth={7}
 			  />
 
 			  <MapView.Polyline 
@@ -91,14 +119,22 @@ export const MapContainer = ({region, trains}) => {
 			    coordinates={Macarthur_richmond}
 			    strokeColor={"orange"}
 			    geoDesic={true}
-			    strokeWidth={5}
+			    strokeWidth={7}
 			  />
 			  <MapView.Polyline 
 			  //displays line from MacArthur to pittsburg 
 			    coordinates={Macarthur_pitt}
 			    strokeColor={"yellow"}
 			    geoDesic={true}
-			    strokeWidth={3}
+			    strokeWidth={4}
+			  />
+
+			  <MapView.Polyline 
+			  //displays line from dublin to west oakland 
+			    coordinates={Fremont_Daly}
+			    strokeColor={"green"}
+			    geoDesic={true}
+			    strokeWidth={4}
 			  />
 
 			  <MapView.Polyline 
@@ -111,7 +147,8 @@ export const MapContainer = ({region, trains}) => {
 
 			</MapView>
 		</View>
-	);
+	  );
+    }
 }
 
 export default MapContainer;

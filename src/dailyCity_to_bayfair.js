@@ -112,7 +112,7 @@ let Macarthur_richmond = [
 		longitude: -122.2703852
 	},{
 		latitude: 37.852803,
-        longitude: -122.270062
+    longitude: -122.270062
 	},{
 		latitude: 37.870104,
        longitude: -122.268133
@@ -223,10 +223,77 @@ let Dub_Daily = [
 	}
 ];
 
+let Fremont_Daly = [
+    // Warmsprings
+  {
+    latitude: 37.502171,
+    longitude: -121.939313
+  },
+  // Fremont
+  {
+    latitude: 37.557465, 
+    longitude: -121.976608
+  },
+  //Union City 
+  {
+    latitude: 37.590630,
+    longitude: -122.017388
+  },
+  // Souht HAyward 
+  {
+    latitude: 37.634375,
+    longitude: -122.057189
+  },
+  // HAyward 
+  {
+    latitude: 37.669723,
+    longitude: -122.087018
+  },
+  // bay fair
+  {
+    latitude: 37.696924,
+    longitude: -122.126514
+  },
+  // sna leandro 
+  {
+    latitude: 37.721947,
+    longitude: -122.160844
+  },
+  // coliseum 
+  {
+    latitude: 37.753661,
+    longitude: -122.196869
+  },
+  // air port OAK 
+  {
+    latitude: 37.713238,
+    longitude: -122.212191
+  },
+  // coliseum 
+  {
+    latitude: 37.753661,
+    longitude: -122.196869
+  },
+  // fruitvale
+  {
+    latitude: 37.774836,
+    longitude: -122.224175
+  },
+  // lake merit
+  {
+    latitude: 37.797027,
+    longitude: -122.265180
+  },
+  {
+    latitude: 37.805042,
+    longitude: -122.294823
+  }
+];
 export {
 	Daily,
 	Dailycity,
 	Macarthur_pitt,
 	Macarthur_richmond,
-	Dub_Daily
+	Dub_Daily,
+  Fremont_Daly
 };
