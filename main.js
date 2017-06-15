@@ -14,7 +14,7 @@ import { StackNavigator } from 'react-navigation';
 const { width, height } = Dimensions.get('window')
 
 import { Container } from 'native-base';
-
+import stylez from './src/MapContainerStyles.js'
 import MapContainer from './src/index';
 import axios from 'axios';
 import UseLocationButton from './components/uselocationbutton';
@@ -129,15 +129,26 @@ export default class Main extends Component {
     setInterval(() => this.getSchedule(this.state.currentStation), 5000)
   }
   
-  static navigationOptions = {
-    title: 'BART Buddy',
+  static navigationOptions = ({ navigation }) => {
+    const {state, setParams} = navigation;
+    return {
+      title: `BART Buddy`,
+      headerRight: (
+        <Button
+          title='Advisories'
+          onPress={() => navigation.navigate('Login')}
+        />
+      ),
+    };
   };
+
 
   render() {
     const { navigate } = this.props.navigation; 
 
     return (
-      <View style={styles.container}>
+      <View>
+        <View style={stylez.map}>
         <MapContainer 
           region={this.state.region} 
           trainTime={this.state.train}
@@ -145,9 +156,9 @@ export default class Main extends Component {
           render={this.rendermap.bind(this)}
           newPlace={this.state.newRegion}
           /> 
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center',}}>
+          </View>
+        <View style={{flex: 3, flexDirection: 'row'}}>
           <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
-          <Button onPress={() => navigate('Login')} title="Advisories" />
           <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>  
         </View>
         <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
