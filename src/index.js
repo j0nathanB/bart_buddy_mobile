@@ -13,9 +13,7 @@ import {
   } from "./dailyCity_to_bayfair.js";
 import Destination from './train_info.js';
 import TrainView from './train_view.js';
-import sched from './sched.js'
-
-
+import sched from './sched.js';
 
 class MapContainer extends React.Component {
 	constructor(props) {
@@ -59,7 +57,7 @@ class MapContainer extends React.Component {
 			    description={this.props.name.name}/> : null}
 
 
-			    {this.props.trains.map((x, index) => {
+			    {this.props.trainTime.map((x, index) => {
 			    return <TrainView 
 			    station_coordinates={{
 			    	latitude: x[0], 
@@ -146,8 +144,6 @@ class MapContainer extends React.Component {
 			    geoDesic={true}
 			    strokeWidth={2}
 			  />
-
-			  
 
 			</MapView>
 		</View>
