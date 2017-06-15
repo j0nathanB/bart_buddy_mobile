@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -139,6 +140,8 @@ export default class Main extends Component {
           /> 
         <Button onPress={() => navigate('Login')} title="Get SMS Updates" />
         <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
+        <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>
+        <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
 
       </View>
     );
@@ -167,3 +170,4 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('Main', () => Main);
+
