@@ -14,8 +14,8 @@ setInterval(() => getBSA(), 15000);
 let getBSA = () => {
   axios.get('http://localhost:1337/api/advisory')
   .then( res => {
-    if(bsa !== res.data.root.bsa.description) {
-      bsa = res.data.root.bsa.description;
+    if(bsa !== res.data.root.bsa.sms_text) {
+      bsa = res.data.root.bsa.sms_text;
       sendUpdate();
     }
   })
