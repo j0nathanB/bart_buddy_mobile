@@ -4,10 +4,11 @@ const db = require('knex')(require('../../knexfile.js')); //change knexfile loca
 const config = require('config');
 const env = require('dotenv').config();
 const fetch = require('node-fetch');
+var schedule = require('node-schedule');
 
 var hash = {};
 
-setInterval(function() {
+schedule.scheduleJob('0,15,30,45 * 4-23,0-2 * * *', function() {
   fetch('http://api.bart.gov/gtfsrt/tripupdate.aspx', {method:'GET', encoding:null})
   .then((response) => {
     if (response.body._readableState.buffer.tail) {
@@ -75,6 +76,9 @@ setInterval(function() {
       });
     }
   }).catch((err) => {console.log('ERROR: ', err)});
-}, 15000);
+});
 
+schedule.scheduleJob('0 0 3 * * *', function() {
+  hash = {};
+})
 module.exports = hash;
