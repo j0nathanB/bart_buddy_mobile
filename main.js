@@ -35,13 +35,14 @@ export default class Main extends Component {
     super(props);
     this.state = {
       region: {
-        latitude: 37.805042,
-        longitude: -122.294823,
+        latitude: 37.75042,
+        longitude: -122.22823,
         latitudeDelta: 0.4,
         longitudeDelta: 0.5
       },
       station: null,
       train: [],
+      newRegion: null,
       lat: 0,
       long: 0,
       isLoading: false,
@@ -77,7 +78,7 @@ export default class Main extends Component {
   
   rendermap(lat, long) {
     this.setState({
-      region: {
+      newRegion: {
         latitude: lat,
         longitude: long,
         latitudeDelta: 0.093,
@@ -128,19 +129,16 @@ export default class Main extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-
       <View style={styles.container}>
         <MapContainer 
           region={this.state.region} 
           trainTime={this.state.train}
           name={this.state.currentStation}  
           render={this.rendermap.bind(this)}
+          newPlace={this.state.newRegion}
           /> 
         <Button onPress={() => navigate('Login')} title="Get SMS Updates" />
         <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
-        <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>
-        <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
-
 
       </View>
     );

@@ -27,7 +27,7 @@ class MapContainer extends React.Component {
 
 	componentWillReceiveProps(props) {
 	  this.setState({
-	  	newRegion: props.region,
+	  	newRegion: props.newPlace,
 	  })
 	}
 
