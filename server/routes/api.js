@@ -9,7 +9,6 @@ var ByteBuffer = require('bytebuffer');
 const db = require('knex')(require('../../knexfile.js')); //change knexfile location accordingly
 const config = require('config');
 const env = require('dotenv').config();
-const fetch = require('node-fetch');
 
 
 router.route('/')
@@ -46,67 +45,89 @@ router.route('/closest_station')
 
     });
 
+//this is used for getting station longitude and latitude
+router.route('/get_stations')
+    .get((req, res) => {
 
-router.route('/advisory')
-  .get((req, res) => {
-    let url = `http://api.bart.gov/api/bsa.aspx?cmd=bsa&orig=all&key=QQZR-5GY8-99PT-DWE9`;
+        let url = `http://api.bart.gov/api/stn.aspx?cmd=stns&key=QQZR-5GY8-99PT-DWE9`;
+        axios.get(url)
+            .then((result) => {
+                console.log('I am working from inside get_stations');
+                var json = parser.toJson(result.data);
+                let data = JSON.parse(json);
+                let newArray = [];
+                data.root.stations.station.forEach((x) => {
+                        newArray.push([parseFloat(x.gtfs_longitude), parseFloat(x.gtfs_latitude)])
+                    })
+                    //console.log(newArray)
+                res.send(newArray);
+            })
+            .catch((err) => {
+                console.log('error from bart api: ', err.message);
+            });
+    });
 
-    axios.get(url)
-      .then((result) => {
-        var json = parser.toJson(result.data);
-        let data = JSON.parse(json);
-        res.send(data);
-      })
-      .catch((err) => {
-        console.log('error from /advisory: ', err.message);
-      });
-  });
+router.route('/station_advisory')
+    .post((req, res) => {
+
+        let stationObj = {
+            station: 'LAKE'
+        };
+
+        let url = `http://api.bart.gov/api/bsa.aspx?cmd=bsa&orig=${stationObj.station}&key=QQZR-5GY8-99PT-DWE9`;
+        axios.get(url)
+            .then((result) => {
+                console.log('I am working from inside station_advisory');
+                var json = parser.toJson(result.data);
+                let data = JSON.parse(json);
+                res.send(data);
+            })
+            .catch((err) => {
+                console.log('error from bart api: ', err.message);
+            });
+    });
 
 
 router.route('/schedule')
-  .post((req, res) => {
-    let schedules = [];
-    let stationObj = {
-      station: req.body.abbr
-    };
-    let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationObj.station}&key=QQZR-5GY8-99PT-DWE9`;
+    .post((req, res) => {
+        let schedules = [];
 
-    axios.get(url)
-      .then((result) => {
-        var json = parser.toJson(result.data);
-        let data = JSON.parse(json);
-        let timeTables = [];
+        let stationObj = {
+            station: req.body.abbr
+        };
 
-        Array.isArray(data.root.station.etd) ? 
-          timeTables = data.root.station.etd :
-          timeTables.push(data.root.station.etd)
+        let url = `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${stationObj.station}&key=QQZR-5GY8-99PT-DWE9`;
 
-        timeTables.map(
-          route => {
-            if (Array.isArray(route.estimate)) {
-              route.estimate.map(
-                eta => {
-                  schedules.push({
-                    minutes: eta.minutes,
-                    destination: route.destination
-                  })
-                }
-              )
-            } else {
-              schedules.push({
-                minutes: route.estimate.minutes,
-                destination: route.destination
-              })
-            }
-          }
-        );
-        
-        res.send(schedules);
-    })
-    .catch((err) => {
-        console.log('Error in api/schedule: ', err.message);
+        axios.get(url)
+            .then((result) => {
+                var json = parser.toJson(result.data);
+                let data = JSON.parse(json);
+
+                data.root.station.etd.map(
+                    route => {
+                        if (Array.isArray(route.estimate)) {
+                            route.estimate.map(
+                                eta => {
+                                    schedules.push({
+                                        minutes: eta.minutes,
+                                        destination: route.destination
+                                    })
+                                }
+                            )
+                        } else {
+                            schedules.push({
+                                minutes: route.estimate.minutes,
+                                destination: route.destination
+                            })
+                        }
+                    }
+                );
+                res.send(schedules);
+            })
+            .catch((err) => {
+                console.log('Error in api/schedule: ', err.message);
+            });
     });
-  });
 
 router.route('/getgtfs')
   .get((req, res) => {
