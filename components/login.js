@@ -58,7 +58,7 @@ export default class Login extends React.Component {
                     <Body>
                         <H2>Subscribe via SMS</H2>
                         <Text>
-                            Enter your mobile number to receive real-time BART delay advisories via SMS. (Carrier rates may apply).
+                            Enter your mobile number to receive real-time BART delay advisories via SMS. (Carrier rates may apply). To stop messages, respond to a Bart Buddy message with 'thanks'. 
                         </Text>
                     </Body>
             

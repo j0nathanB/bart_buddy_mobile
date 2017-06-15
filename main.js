@@ -100,7 +100,6 @@ export default class Main extends Component {
    
   }
 
-
   getSchedule(station) {
     let tempSchedule = []; 
     let tempRoutes = [];   
@@ -126,9 +125,13 @@ export default class Main extends Component {
     });   
   }   
 
+  static navigationOptions = {
+    title: 'BART Buddy',
+  };
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation; 
+
     return (
       <View style={styles.container}>
         <MapContainer 
@@ -138,11 +141,12 @@ export default class Main extends Component {
           render={this.rendermap.bind(this)}
           newPlace={this.state.newRegion}
           /> 
-        <Button onPress={() => navigate('Login')} title="Get SMS Updates" />
-        <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
-        <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center',}}>
+          <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
+          <Button onPress={() => navigate('Login')} title="Advisories" />
+          <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>  
+        </View>
         <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
-
       </View>
     );
   }

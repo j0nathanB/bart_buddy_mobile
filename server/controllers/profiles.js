@@ -18,12 +18,12 @@ module.exports.create = (req, res) => {
   })
     .save()
     .then(result => {
-      console.log
+      //send "welcome to Bart Buddy! Bart Service Advisories: ${} ""
       res.status(201).send(result);
     })
     .catch(err => {
       if (err.constraint === 'users_username_unique') {
-        return res.status(403);
+        return res.status(403); //send error message
       }
       res.status(500).send(err);
     });
