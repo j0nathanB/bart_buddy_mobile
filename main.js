@@ -57,19 +57,19 @@ export default class Main extends Component {
     this.updateStation = this.updateStation.bind(this);
   }
 
-  // componentWillMount () {
-  //   setInterval(() => {
-  //     axios.get('http://localhost:1337/api/getTheTrains')
-  //     .then((response) => {
-  //       this.setState({
-  //         train: response.data,
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       console.log('I am an errror: ', err)
-  //     })
-  //   }, 1000)
-  // }
+  componentWillMount () {
+    setInterval(() => {
+      axios.get('http://localhost:1337/api/getTheTrains')
+      .then((response) => {
+        this.setState({
+          train: response.data,
+        })
+      })
+      .catch((err) => {
+        console.log('I am an errror: ', err)
+      })
+    }, 1000)
+  }
 
   updateRoute(data) {
     this.setState({ currentRoute: data });

@@ -42,7 +42,6 @@ class MapContainer extends React.Component {
 			  mapType='terrain'
 			  zoomEnabled={true}
 			  initialRegion={this.state.region}
-			  showsMyLocationButton={true}
 			  region={this.state.newRegion}
 			  animateToCoordinate={this.state.newRegion}
 			  >
@@ -53,7 +52,7 @@ class MapContainer extends React.Component {
 			       longitude:  this.state.newRegion.longitude
 			    }}
 			    image={require('./train_images/station.png')}
-			    title={this.props.name.abbr}
+			    title={`STN: ${this.props.name.abbr}`}
 			    description={this.props.name.name}/> : null}
 
 

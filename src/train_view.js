@@ -47,14 +47,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
 	    <MapView.Marker 
 	      coordinate={station_coordinates}
 	      image={require('./train_images/blueTrain.png')}
-	    >
-        <MapView.Callout >
-        <Destination Direction={direction} 
-        Route={route} 
-       
-        time_to_next_station={'100 minutes'}  />
-        </MapView.Callout>
-	    </MapView.Marker>
+        title={direction}
+        description={route}
+	    />
+        
 	  );
 
     } else if (color === "ff9933")  {
@@ -70,13 +66,11 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
       <MapView.Marker 
         coordinate={station_coordinates}
         image={require('./train_images/orangeTrain.png')}
-      >
-      <MapView.Callout >
-        <Destination Direction={direction} 
-        Route={route} 
-        time_to_next_station={'100 minutes'}  />
-        </MapView.Callout>
-      </MapView.Marker>
+        title={direction}
+        description={route}
+      />
+      
+      
       );
   	} else if (color === "ffff33") {
       
@@ -93,13 +87,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
 	    <MapView.Marker 
 	      coordinate={station_coordinates}
 	      image={require('./train_images/yellowTrain.png')}
-	    >
-	    <MapView.Callout >
-        <Destination Direction={direction} 
-        Route={route} 
-        time_to_next_station={'100 minutes'}  />
-        </MapView.Callout>
-	    </MapView.Marker>
+        title={direction}
+        description={route}
+	    />
+	  
      );
 
    } else if (color === "d5cfa3") {
@@ -115,13 +106,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
       <MapView.Marker 
         coordinate={station_coordinates}
         image={require('./train_images/beigeTrain.png')}
-      >
-      <MapView.Callout >
-        <Destination Direction={direction} 
-        Route={route} 
-        time_to_next_station={'100 minutes'}  />
-        </MapView.Callout>
-      </MapView.Marker>
+        title={direction}
+        description={route}
+      />
+      
      );
    } else if ( color === "339933" ) {
      
@@ -136,13 +124,9 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
       <MapView.Marker 
         coordinate={station_coordinates}
         image={require('./train_images/greenTrain.png')}
-      >
-      <MapView.Callout >
-        <Destination Direction={direction} 
-        Route={route} 
-        time_to_next_station={'100 minutes'}  />
-        </MapView.Callout>
-      </MapView.Marker>
+        title={direction}
+        description={route}
+      />
      );
    } else if ( color === "ff0000" ) {
     let direction
@@ -156,13 +140,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
       <MapView.Marker 
         coordinate={station_coordinates}
         image={require('./train_images/redTrain.png')}
-      >
-      <MapView.Callout >
-        <Destination Direction={direction} 
-        Route={route} 
-        time_to_next_station={'100 minutes'}  />
-        </MapView.Callout>
-      </MapView.Marker>
+        title={direction}
+        description={route}
+      />
+      
      );
    } else if ( color === "000000" ) {
        
@@ -175,13 +156,9 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             <MapView.Marker 
               coordinate={station_coordinates}
               image={require('./train_images/redTrain.png')}
-            >
-            <MapView.Callout >
-              <Destination Direction={direction} 
-              Route={route} 
-              time_to_next_station={'100 minutes'}  />
-              </MapView.Callout>
-            </MapView.Marker>
+              title={direction}
+              description={route}
+            />
            );
         
 
@@ -192,13 +169,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             <MapView.Marker 
               coordinate={station_coordinates}
               image={require('./train_images/blueTrain.png')}
-            >
-            <MapView.Callout >
-              <Destination Direction={direction} 
-              Route={route} 
-              time_to_next_station={'100 minutes'}  />
-              </MapView.Callout>
-            </MapView.Marker>
+              title={direction}
+              description={route}
+            />
+            
            );
         } else if ( route === "Pittsburg/Bay Point" ) {
           direction = "East";
@@ -206,13 +180,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             <MapView.Marker 
               coordinate={station_coordinates}
               image={require('./train_images/yellowTrain.png')}
-            >
-            <MapView.Callout >
-              <Destination Direction={direction} 
-              Route={route} 
-              time_to_next_station={'100 minutes'}  />
-              </MapView.Callout>
-            </MapView.Marker>
+              title={direction}
+              description={route}
+            />
+            
            );
         } else if ( route === "Warm Springs/South Fremont") {
           direction = "South";
@@ -220,27 +191,21 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
             <MapView.Marker 
               coordinate={station_coordinates}
               image={require('./train_images/orangeTrain.png')}
-            >
-            <MapView.Callout >
-              <Destination Direction={direction} 
-              Route={route} 
-              time_to_next_station={'100 minutes'}  />
-              </MapView.Callout>
-            </MapView.Marker>
+              title={direction}
+              description={route}
+            />
+            
            );
         } else {
           
           return (
         <MapView.Marker 
           coordinate={station_coordinates}
-          image={require('./train_images/redTrain.png')}
-        >
-        <MapView.Callout >
-          <Destination Direction={"direction"} 
-          Route={route} 
-          time_to_next_station={'100 minutes'}  />
-          </MapView.Callout>
-        </MapView.Marker>
+          image={require('./train_images/beigeTrain.png')}
+          title={direction}
+        description={route}
+        />
+        
        );
       }
    } else {
@@ -248,13 +213,10 @@ const TrainView = ({station_coordinates, route, color, destination}) => {
         <MapView.Marker 
           coordinate={station_coordinates}
           image={require('./train_images/beigeTrain.png')}
-        >
-        <MapView.Callout >
-          <Destination Direction={"direction"} 
-          Route={route} 
-          time_to_next_station={'100 minutes'}  />
-          </MapView.Callout>
-        </MapView.Marker>
+          title={direction}
+          description={route}
+        />
+       
        );
    }
 }
