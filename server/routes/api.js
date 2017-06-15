@@ -129,6 +129,21 @@ router.route('/schedule')
             });
     });
 
+router.route('/advisory')
+  .get((req, res) => {
+    let url = `http://api.bart.gov/api/bsa.aspx?cmd=bsa&orig=all&key=QQZR-5GY8-99PT-DWE9`;
+
+    axios.get(url)
+      .then((result) => {
+        var json = parser.toJson(result.data);
+        let data = JSON.parse(json);
+        res.send(data);
+      })
+      .catch((err) => {
+        console.log('error from /advisory: ', err.message);
+      });
+  });
+
 router.route('/getgtfs')
   .get((req, res) => {
     var promises = [];
