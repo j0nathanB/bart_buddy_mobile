@@ -75,6 +75,7 @@ export default class Main extends Component {
 
   updateRoute(data) {
     this.setState({ currentRoute: data });
+    this.getSchedule(this.state.currentStation);
   }
   
   rendermap(lat, long) {
@@ -139,6 +140,7 @@ export default class Main extends Component {
           onPress={() => navigation.navigate('Login')}
         />
       ),
+      headerStyle: {backgroundColor:'#90EE90'}
     };
   };
   
@@ -160,12 +162,12 @@ export default class Main extends Component {
           newPlace={this.state.newRegion}
           /> 
         </View>
-        <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
         <View style={{flex: 3, flexDirection: 'row'}}>
-          <Container>
+          <Container style={{backgroundColor:'#90EE90'}}>
             <Content>
               <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
               <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>    
+              <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
             </Content>
           </Container>
         </View> 

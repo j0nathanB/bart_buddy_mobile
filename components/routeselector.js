@@ -30,7 +30,7 @@ export default class RouteSelector extends Component {
 
   render() {
     return (
-      <Button full onPress={this.testFunction}><Text>Route: {this.props.parentRoute}</Text></Button>
+      <Button full style={{marginBottom:'5%'}} onPress={this.testFunction}><Text>Route: {this.props.parentRoute}</Text></Button>
     );
   }
 }

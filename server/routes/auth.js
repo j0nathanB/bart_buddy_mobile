@@ -36,7 +36,7 @@ router.route('/inbound')
       resp.message(`You have been unsubscribed. Thank you for using Bart Buddy.`);
       res.send(resp.toString());
     } else {
-      res.send("Please try again. Also, we're looking to get hired! Find us at github.com/thewizards ");  
+      res.send("We're looking to get hired! Find us at github.com/thewizards ");  
   }
     
   })
