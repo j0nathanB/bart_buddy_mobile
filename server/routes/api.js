@@ -345,7 +345,6 @@ router.route('/getTheTrains')
         db.select().table('gtfs_schedule').orderBy('id').then((stuff) => {    
           //console.log('inside man');
           var arr = [];
-
           var editStuff = stuff.filter(function(item) {
             if (item.trip_id.slice(item.trip_id.length - 3) === 'SAT' || item.trip_id.slice(item.trip_id.length - 3) === 'SUN') {
               return false;
@@ -357,8 +356,8 @@ router.route('/getTheTrains')
             //console.log('check docs: ', editStuff[i]);
             if (editStuff[i].trip_id === editStuff[i + 1].trip_id) {
               if (cur_seconds >= editStuff[i].arrival_time && cur_seconds < editStuff[i + 1].arrival_time) {
-                arr.push([editStuff[i + 1].trip_id, (cur_seconds - editStuff[i].arrival_time) / (editStuff[i + 1].arrival_time - editStuff[i].arrival_time), editStuff[i].stop_id, editStuff[i + 1].stop_id, [editStuff[i].stop_lat, editStuff[i].stop_lon],
-                  [editStuff[i + 1].stop_lat, editStuff[i + 1].stop_lon], editStuff[i].stop_headsign
+                arr.push([editStuff[i + 1].trip_id, (cur_seconds - editStuff[i].arrival_time) / (editStuff[i + 1].arrival_time - editStuff[i].arrival_time), editStuff[i].stop_id, editStuff[i + 1].stop_id, [editStuff[i].stop_lat, editStuff[i].stop_long],
+                  [editStuff[i + 1].stop_lat, editStuff[i + 1].stop_long], editStuff[i].stop_headsign
                 ]);
                 for (var g = 0; g < editStuff.length; g++) {
                   if (editStuff[g].trip_id === editStuff[i].trip_id && editStuff[g].stop_sequence === 1) {
@@ -383,9 +382,9 @@ router.route('/getTheTrains')
             finalLocations.push(finalPoint);
           }
 
-          res.send(finalLocations);
           //data = finalLocations;
-          //console.log('************** DATA ************ ', data);
+          //console.log('************** DATA ************ ', finalLocations);
+          res.send(finalLocations);
         });
       }
     });

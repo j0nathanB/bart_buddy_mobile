@@ -53,11 +53,7 @@ export default class StationSelector extends Component {
 
   render() {
     return (
-      <Container>
-        <Content padder>
-          <Button onPress={this.testFunction}><Text>STN: {this.props.parentStation}</Text></Button>
-        </Content>
-      </Container>
+      <Button full style={{marginBottom:'5%'}} onPress={this.testFunction}><Text>Station: {this.props.parentStation}</Text></Button>
     );
   }
 }
