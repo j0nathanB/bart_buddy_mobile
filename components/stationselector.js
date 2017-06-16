@@ -22,8 +22,8 @@ var BUTTONS = [
 ];
 
 var STATION_NAMES = stationList.map((cur) => { return cur.name; });
-var DESTRUCTIVE_INDEX = 3;
-var CANCEL_INDEX = 4;
+var DESTRUCTIVE_INDEX = 100;
+var CANCEL_INDEX = 101;
 export default class StationSelector extends Component {
   constructor(props) {
     super(props);

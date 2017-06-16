@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Container, Content, ActionSheet, Button, Text, Header, Left, Right, Body, Title, Icon } from 'native-base';
 import hardCodedDestinations from './destinations';
 
-var DESTRUCTIVE_INDEX = 3;
-var CANCEL_INDEX = 4;
+var DESTRUCTIVE_INDEX = 100;
+var CANCEL_INDEX = 101;
 export default class RouteSelector extends Component {
   constructor(props) {
     super(props);

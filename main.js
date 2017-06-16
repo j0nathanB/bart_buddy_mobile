@@ -125,6 +125,10 @@ export default class Main extends Component {
     });   
   }   
 
+  componentDidMount() {   
+    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
+  }
+  
   static navigationOptions = {
     title: 'BART Buddy',
   };
