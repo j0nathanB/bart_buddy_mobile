@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Body, Card, CardItem, Container, Content, Form, H1, H2, H3, Item, Input, CheckBox, ListItem, StyleProvider } from 'native-base';
+import { Body, Button, Card, CardItem, Container, Content, Form, H1, H2, H3, Item, Input, CheckBox, ListItem, StyleProvider, Text } from 'native-base';
+import { Image } from 'react-native'
 import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
-import { Text } from 'react-native' 
 import axios from 'axios';
 
 
@@ -41,7 +41,7 @@ export default class Login extends React.Component {
   render () {
     return (
       <StyleProvider style={getTheme(material)}>  
-        <Container>
+        <Container style={{backgroundColor: 'orange'}}>
           <Content>
             <Card>
                 <CardItem header>
@@ -61,14 +61,14 @@ export default class Login extends React.Component {
                             Enter your mobile number to receive real-time BART delay advisories via SMS. (Carrier rates may apply). To stop messages, respond to a Bart Buddy message with 'thanks'. 
                         </Text>
                     </Body>
-            
                 </CardItem>
             </Card>       
-            <Form>
-              <Item last>
-                <Input onChangeText={(text) => this.setState({text})} keyboardType="phone-pad" placeholder="Phone" onSubmitEditing={this.onSubmit} maxLength = {10}/>
-              </Item>
-            </Form>
+              <Item>
+                <Input style={{backgroundColor: 'white'}} onChangeText={(text) => this.setState({text})} keyboardType="phone-pad" placeholder="Phone" onSubmitEditing={this.onSubmit} maxLength = {10}/>
+                <Button onPress={this.onSubmit} full>
+                  <Text>Subscribe</Text>
+                </Button>
+                 </Item>
           </Content>
         </Container>
       </StyleProvider>   
