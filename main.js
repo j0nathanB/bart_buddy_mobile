@@ -61,16 +61,20 @@ export default class Main extends Component {
 
   componentWillMount () {
     setInterval(() => {
-      axios.get('http://localhost:1337/api/getTheTrains')
-      .then((response) => {
-        this.setState({
-          train: response.data,
-        })
-      })
-      .catch((err) => {
-        console.log('I am an errror: ', err)
-      })
-    }, 1000)
+      var theDate = new Date();
+      var theSeconds = theDate.getSeconds();
+      if (theSeconds !== 59 && theSeconds !== 0 && theSeconds !== 1) {
+        axios.get('http://localhost:1337/api/getTheTrains')
+          .then((response) => {
+            this.setState({
+              train: response.data,
+            })
+          })
+          .catch((err) => {
+            console.log('I am an errror: ', err)
+          });
+      }    
+    }, 1000);
   }
 
   updateRoute(data) {
