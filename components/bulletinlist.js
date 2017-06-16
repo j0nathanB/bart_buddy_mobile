@@ -4,7 +4,7 @@ import React, {
   View,
   Dimensions
 } from 'react';
-import { Container, Content, List, Card, CardItem, Text } from 'native-base';
+import { Container, Content, List, ListItem, Card, CardItem, Text } from 'native-base';
 
 export default class Bulletinlist extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Bulletinlist extends Component {
                 {
                   this.props.schedule.filter( lineItem => lineItem.destination === this.props.route)
                   .map( (cur, idx) => { return ( 
-                      <Text style={{ backgroundColor: 'white'}} key={idx}>Next {cur.destination} Train: {cur.minutes} minutes</Text>
+                      <Text style={{ textAlign: 'center', backgroundColor: 'white'}} key={idx}>Next {cur.destination} Train: {cur.minutes} minutes</Text>
                     )}
                       )
                 }
