@@ -10,10 +10,10 @@ import {
   Dimensions,
   StatusBarIOS
 } from 'react-native'
+import { Container, Content, Separator } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 const { width, height } = Dimensions.get('window')
 
-import { Container } from 'native-base';
 import stylez from './src/MapContainerStyles.js'
 import MapContainer from './src/index';
 import axios from 'axios';
@@ -141,7 +141,10 @@ export default class Main extends Component {
       ),
     };
   };
-
+  
+  componentDidMount() {   
+    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
+  }
 
   render() {
     const { navigate } = this.props.navigation; 
@@ -156,12 +159,16 @@ export default class Main extends Component {
           render={this.rendermap.bind(this)}
           newPlace={this.state.newRegion}
           /> 
-          </View>
-        <View style={{flex: 3, flexDirection: 'row'}}>
-          <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
-          <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>  
         </View>
         <BulletinList station={this.state.currentStation} route={this.state.currentRoute} schedule={this.state.schedule}/>
+        <View style={{flex: 3, flexDirection: 'row'}}>
+          <Container>
+            <Content>
+              <StationSelector stationSelectHandler={this.updateStation} parentStation={this.state.currentStation.name}/>
+              <RouteSelector routeSelectHandler={this.updateRoute} parentRoute={this.state.currentRoute} routeChoices={this.state.currentRouteChoices}/>    
+            </Content>
+          </Container>
+        </View> 
       </View>
     );
   }
