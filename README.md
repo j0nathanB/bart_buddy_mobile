@@ -39,13 +39,18 @@ This project requires several steps to load, you must be running node 6.10.0 or 
 5.) pod install 
 
 You must then open  bart_buddy_mobile.xcworkspace
+
 6.) open the AppDelegate.h file 
+	
 	1.) add @import GoogleMaps; before @implementation AppDelegate
 
 	2.)  In - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions, add [ GMSServices provideAPIKey:@“API_KEY_HERE”];
      -you msut have an API key from google Maps IOS SDK
 
+
 7.) go into node_modules/react-native/Libraries/NativeAnimation/GET THE CORRECT NAME OF THIS FILE
+	
 	-once this file is open change 
+
 8.) react-native run-ios
  
