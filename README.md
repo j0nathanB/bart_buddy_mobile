@@ -48,9 +48,9 @@ You must then open  bart_buddy_mobile.xcworkspace
      -you msut have an API key from google Maps IOS SDK
 
 
-7.) go into node_modules/react-native/Libraries/NativeAnimation/GET THE CORRECT NAME OF THIS FILE
+7.) go into node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedNodesManager.h
 	
-	-once this file is open change 
+	-once this file is open change: #import <RCTValueAnimatedNode/RCTValueAnimatedNode.h> to "RCTValueAnimatedNode.h"
 
 8.) react-native run-ios
  
