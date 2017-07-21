@@ -26,8 +26,9 @@ import DestinationsMenu from './components/destinationsmenu';
 import Users from './components/users'
 import StationSelector from  './components/stationselector';
 import RouteSelector from  './components/routeselector';
-import ExperimentalButton from './components/example_button'
-import BulletinList from './components/bulletinlist'
+import ExperimentalButton from './components/example_button';
+import BulletinList from './components/bulletinlist';
+import SocketIOClient from 'socket.io-client';
  
 console.ignoredYellowBox = ['Warning: BackAndroid'];
 
@@ -57,24 +58,19 @@ export default class Main extends Component {
     };
     this.updateRoute = this.updateRoute.bind(this);
     this.updateStation = this.updateStation.bind(this);
+    this.socket = SocketIOClient('https://bart-buddy.herokuapp.com/');
   }
 
-  componentWillMount () {
-    setInterval(() => {
-      var theDate = new Date();
-      var theSeconds = theDate.getSeconds();
-      if (theSeconds !== 59 && theSeconds !== 0 && theSeconds !== 1) {
-        axios.get('http://localhost:1337/api/getTheTrains')
-          .then((response) => {
-            this.setState({
-              train: response.data,
-            })
-          })
-          .catch((err) => {
-            console.log('I am an errror: ', err)
-          });
-      }    
-    }, 1000);
+  componentWillMount () {   
+    this.socket.on('connect', () => {
+      console.log('connected!');
+    });
+     
+    this.socket.on('data', (data) => {
+      this.setState({
+        train: data,
+      });
+    });
   }
 
   updateRoute(data) {
@@ -108,7 +104,7 @@ export default class Main extends Component {
   getSchedule(station) {
     let tempSchedule = []; 
     let tempRoutes = [];   
-    axios.post('http://localhost:1337/api/schedule', station)   
+    axios.post('https://bart-buddy.herokuapp.com/api/schedule', station)   
     .then(    
       res => { if (Array.isArray(res.data)) {
           //alert("Array.isArray is true")
@@ -130,9 +126,9 @@ export default class Main extends Component {
     });   
   }   
 
-  componentDidMount() {   
-    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
-  }
+  // componentDidMount() {   
+  //   setInterval(() => this.getSchedule(this.state.currentStation), 5000)
+  // }
   
   static navigationOptions = ({ navigation }) => {
     const {state, setParams} = navigation;
@@ -147,10 +143,6 @@ export default class Main extends Component {
       headerStyle: {backgroundColor:'#90EE90'}
     };
   };
-  
-  componentDidMount() {   
-    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
-  }
 
   render() {
     const { navigate } = this.props.navigation; 
