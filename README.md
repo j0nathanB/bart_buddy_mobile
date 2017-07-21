@@ -26,7 +26,7 @@ Bart-buddy is a new and exciting technology that allows users to see and plan th
 This project requires several steps to load, you must be running node 6.10.0 or earlier, asnd Xcode 7.8.0 or later.
 
 - Clone the repo down 
-- Cd into the route directory 
+- Cd into the root directory 
 
 1.) brew install watchman
 
