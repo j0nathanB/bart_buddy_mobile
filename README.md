@@ -40,7 +40,7 @@ This project requires several steps to load, you must be running node 6.10.0 or 
 
 You must then open  bart_buddy_mobile.xcworkspace
 
-6.) open the AppDelegate.h file 
+6.) open the AppDelegate.m file 
 	
 	1.) add @import GoogleMaps; before @implementation AppDelegate
 
