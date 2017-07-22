@@ -6,7 +6,7 @@ import material from '../native-base-theme/variables/material';
 import axios from 'axios';
 
 
-export default class Login extends React.Component {
+export default class Advisories extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -15,6 +15,15 @@ export default class Login extends React.Component {
     };
     this.onSubmit = this.onSubmit.bind(this)
   }
+
+  static navigationOptions = ({ navigation }) => {
+    const {state, setParams} = navigation;
+    return {
+      headerStyle: {backgroundColor:'#009bda'},
+      headerTintColor: '#fff',
+      headerTitleStyle: {fontFamily: 'Helvetica Neue', fontStyle: 'italic'}
+    };
+  };
 
   onSubmit() {
     let userData = {
@@ -37,11 +46,11 @@ export default class Login extends React.Component {
         console.log('error on the front: ', err)
       })
   }
-    
+
   render () {
     return (
       <StyleProvider style={getTheme(material)}>  
-        <Container style={{backgroundColor: 'orange'}}>
+        <Container style={{backgroundColor:'#009bda'}}>
           <Content>
             <Card>
                 <CardItem header>
