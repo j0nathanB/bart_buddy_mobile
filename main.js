@@ -18,18 +18,9 @@ import MapContainer from './src/index';
 import axios from 'axios';
 import stationList from './components/station_coordinates';
 import StationsMenu from './components/stationsmenu';
-<<<<<<< HEAD
-import DestinationsMenu from './components/destinationsmenu';
-import Users from './components/users'
-import StationSelector from  './components/stationselector';
-import RouteSelector from  './components/routeselector';
-import ExperimentalButton from './components/example_button';
-import BulletinList from './components/bulletinlist';
 import SocketIOClient from 'socket.io-client';
-=======
 import AppButton from './components/appButton'
 import BulletinList from './components/bulletin'
->>>>>>> Refactor UI (add nicer colors, fix layout)
  
 console.ignoredYellowBox = ['Warning: BackAndroid'];
 
@@ -59,7 +50,7 @@ export default class Main extends Component {
     };
     this.updateRoute = this.updateRoute.bind(this);
     this.updateStation = this.updateStation.bind(this);
-<<<<<<< HEAD
+    this.clickAppButton = this.clickAppButton.bind(this);
     this.socket = SocketIOClient('https://bart-buddy.herokuapp.com/');
   }
 
@@ -102,9 +93,6 @@ export default class Main extends Component {
     this.rendermap(lat, long);
    
   }
-=======
-    this.clickAppButton = this.clickAppButton.bind(this);
-  }
 
   static navigationOptions = ({ navigation }) => {
     const {state, setParams} = navigation;
@@ -121,17 +109,13 @@ export default class Main extends Component {
       headerTitleStyle: {fontFamily: 'Helvetica Neue', fontStyle: 'italic'}
     };
   };
->>>>>>> Refactor UI (add nicer colors, fix layout)
 
   getSchedule(station) {
     let scheduleFromAPI = []; 
     let tempRoutes = [];   
-<<<<<<< HEAD
     axios.post('https://bart-buddy.herokuapp.com/api/schedule', station)   
-=======
 
-    axios.post('http://localhost:1337/api/schedule', station)   
->>>>>>> Refactor UI (add nicer colors, fix layout)
+    //axios.post('http://localhost:1337/api/schedule', station)   
     .then(    
       res => { if (Array.isArray(res.data)) {
           scheduleFromAPI = res.data;
@@ -151,48 +135,9 @@ export default class Main extends Component {
     });   
   }  
 
-<<<<<<< HEAD
   // componentDidMount() {   
   //   setInterval(() => this.getSchedule(this.state.currentStation), 5000)
   // }
-  
-  static navigationOptions = ({ navigation }) => {
-    const {state, setParams} = navigation;
-    return {
-      title: `BART Buddy`,
-      headerRight: (
-        <Button
-          title='Advisories'
-          onPress={() => navigation.navigate('Login')}
-        />
-      ),
-      headerStyle: {backgroundColor:'#90EE90'}
-    };
-  };
-
-=======
-  updateStation(data) {
-    let lat = JSON.parse(stationList[data].gtfs_latitude);
-    let long = JSON.parse(stationList[data].gtfs_longitude);
-
-    this.setState(
-      { currentStation: stationList[data] },
-      () => {
-        this.getSchedule(this.state.currentStation);
-      }
-    );
-    
-    this.rendermap(lat, long);
-  }
-
-  updateRoute(data) {
-    this.setState(
-      { currentRoute: this.state.availRoutes[data] },
-      () => {
-        this.getSchedule(this.state.currentStation);
-      }
-    );
-  }
   
   clickAppButton(button, data) {
     if(button === 'Route') {
@@ -201,37 +146,6 @@ export default class Main extends Component {
       this.updateStation(data)
     }
   }
-
-  rendermap(lat, long) {
-    this.setState({
-      newRegion: {
-        latitude: lat,
-        longitude: long,
-        latitudeDelta: 0.093,
-        longitudeDelta: 0.092
-      }
-    })
-  }
-
-  componentWillMount () {
-    setInterval(() => {
-      axios.get('http://localhost:1337/api/getTheTrains')
-      .then((response) => {
-        this.setState({
-          train: response.data,
-        })
-      })
-      .catch((err) => {
-        console.log('I am an errror: ', err)
-      })
-    }, 1000)
-  }
-
-  componentDidMount() {   
-    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
-  }
-  
->>>>>>> Refactor UI (add nicer colors, fix layout)
   render() {
     const { navigate } = this.props.navigation; 
 
