@@ -16,7 +16,7 @@ export default class Map extends Component {
 
   render() {
     return (
-      <View style={{ padding: 10, flexDirection: 'column'}}>
+      <View style={{ padding: 0, flexDirection: 'column'}}>
         <Text>
           Map (Big Effen' Component): {this.props.MapProps}
         </Text>

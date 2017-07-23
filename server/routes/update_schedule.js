@@ -4,10 +4,11 @@ const db = require('knex')(require('../../knexfile.js')); //change knexfile loca
 const config = require('config');
 const env = require('dotenv').config();
 const fetch = require('node-fetch');
+var schedule = require('node-schedule');
 
 var hash = {};
 
-setInterval(function() {
+schedule.scheduleJob('0 * 4-23,0-2 * * *', function() {
   fetch('http://api.bart.gov/gtfsrt/tripupdate.aspx', {method:'GET', encoding:null})
   .then((response) => {
     if (response.body._readableState.buffer.tail) {
@@ -33,11 +34,11 @@ setInterval(function() {
               for (var h = 0; h < hash[entity.trip_update.trip.trip_id].length; h++) {
                 if (hash[entity.trip_update.trip.trip_id][h][0] === entity.trip_update.stop_time_update[k].stop_sequence) {
                   isInside = true;
-                  if (hash[entity.trip_update.trip.trip_id][h][1] < entity.trip_update.stop_time_update[k].departure.delay && entity.trip_update.stop_time_update[k].departure.delay !== 0) {
-                    hash[entity.trip_update.trip.trip_id][h][1] -= entity.trip_update.stop_time_update[k].departure.delay;
+                  if (hash[entity.trip_update.trip.trip_id][h][1] < entity.trip_update.stop_time_update[k].departure.delay) {
+                    hash[entity.trip_update.trip.trip_id][h][1] = entity.trip_update.stop_time_update[k].departure.delay - hash[entity.trip_update.trip.trip_id][h][1];
                     hash[entity.trip_update.trip.trip_id][h][2] = false;
-                  } else if (hash[entity.trip_update.trip.trip_id][h][1] > entity.trip_update.stop_time_update[k].departure.delay && entity.trip_update.stop_time_update[k].departure.delay !== 0) {
-                    hash[entity.trip_update.trip.trip_id][h][1] -= (entity.trip_update.stop_time_update[k].departure.delay - hash[entity.trip_update.trip.trip_id][h][1]);
+                  } else if (hash[entity.trip_update.trip.trip_id][h][1] > entity.trip_update.stop_time_update[k].departure.delay) {
+                    hash[entity.trip_update.trip.trip_id][h][1] -= entity.trip_update.stop_time_update[k].departure.delay;
                     hash[entity.trip_update.trip.trip_id][h][2] = false;
                   }
                 }
@@ -75,6 +76,9 @@ setInterval(function() {
       });
     }
   }).catch((err) => {console.log('ERROR: ', err)});
-}, 15000);
+});
 
+schedule.scheduleJob('0 0 3 * * *', function() {
+  hash = {};
+})
 module.exports = hash;
