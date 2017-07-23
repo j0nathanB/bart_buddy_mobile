@@ -12,7 +12,8 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.create = (req, res) => {
-  let parsedPhone = '+1' + req.body.phone;
+  let parsedPhone = '';
+  req.body ? parsedPhone = '+1' + req.body.phone : parsedPhone = req;
   models.Profile.forge({ 
     phone: parsedPhone
   })
