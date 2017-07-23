@@ -304,7 +304,6 @@ router.route('/advisory')
 router.route('/getTheTrains')
   .get((req, res) => { 
       let d = new Date();
-
       let cur_seconds = d.toTimeString().split(' ')[0].split(':');
       cur_seconds = (+cur_seconds[0]) * 60 * 60 + (+cur_seconds[1]) * 60 + (+cur_seconds[2]);
 

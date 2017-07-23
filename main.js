@@ -9,18 +9,16 @@ import {
   Dimensions,
   StatusBarIOS
 } from 'react-native'
+
 import { Card, Container, Content, Separator, Text } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 const { width, height } = Dimensions.get('window');
-
-import stylez from './src/MapContainerStyles.js';
 import MapContainer from './src/index';
 import axios from 'axios';
 import stationList from './components/station_coordinates';
-import StationsMenu from './components/stationsmenu';
 import SocketIOClient from 'socket.io-client';
 import AppButton from './components/appButton'
-import BulletinList from './components/bulletin'
+import BulletinList from './components/bulletin';
  
 console.ignoredYellowBox = ['Warning: BackAndroid'];
 
@@ -114,7 +112,6 @@ export default class Main extends Component {
     let scheduleFromAPI = []; 
     let tempRoutes = [];   
     axios.post('https://bart-buddy.herokuapp.com/api/schedule', station)   
-
     //axios.post('http://localhost:1337/api/schedule', station)   
     .then(    
       res => { if (Array.isArray(res.data)) {
