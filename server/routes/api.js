@@ -102,7 +102,7 @@ router.route('/schedule')
       .then((result) => {
         var json = parser.toJson(result.data);
         let data = JSON.parse(json);
-
+        console.log(JSON.stringify(stationObj))
         data.root.station.etd.map(
           route => {
             if (Array.isArray(route.estimate)) {

@@ -12,23 +12,17 @@ export default class Bulletin extends Component {
   }
 
     render() {
-      return (
-        <View>
-
-
-              <Text style={{backgroundColor:'black', color:'red'}}>{this.props.route}:{`\n`}{this.props.schedule
-                .filter(scheduleElement => scheduleElement.destination === this.props.route)
-                .map( (cur, idx, arr) => {
-                  if (arr[idx + 1]) {
-                    return <H3 key={idx} style={{backgroundColor:'black', color:'red'}}> {cur.minutes},</H3>
-                  } else if (!arr[idx + 1]){
-                    return <H3 key={idx} style={{backgroundColor:'black', color:'red'}}> {cur.minutes} </H3>
-                  }
-                })
-              } MIN</Text>
-
-
-        </View>
+      return (        
+          <Text style={{color:'red', textAlign:'center'}}>{this.props.route}:{`\n`}{this.props.schedule
+            .filter(scheduleElement => scheduleElement.destination === this.props.route)
+            .map( (cur, idx, arr) => {
+              if (arr[idx + 1]) {
+                return <H3 key={idx} style={{color:'red'}}> {cur.minutes},</H3>
+              } else if (!arr[idx + 1]){
+                return <H3 key={idx}> {cur.minutes} </H3>
+              }
+            })
+          } MIN</Text>
       );
     }
 }

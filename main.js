@@ -38,8 +38,8 @@ export default class Main extends Component {
       lat: 0,
       long: 0,
       isLoading: false,
-      currentStation: stationList[0],
-      currentRoute: '',
+      currentStation: {name:'Please select a station to begin'},
+      currentRoute: 'Please select a route',
       schedule: [{
         "minutes": "0",
         "destination": ""
@@ -65,8 +65,19 @@ export default class Main extends Component {
   }
 
   updateRoute(data) {
-    this.setState({ currentRoute: data });
+    this.setState({ currentRoute: this.state.availRoutes[data] });
     this.getSchedule(this.state.currentStation);
+  }
+  
+  updateStation(data) {
+    let lat = JSON.parse(stationList[data].gtfs_latitude);
+    let long = JSON.parse(stationList[data].gtfs_longitude);
+    this.setState({
+      currentStation: stationList[data],
+      currentRoute: 'Please select a route'
+    });
+    this.getSchedule(this.state.currentStation);
+    this.rendermap(lat, long);
   }
   
   rendermap(lat, long) {
@@ -80,17 +91,6 @@ export default class Main extends Component {
     })
   }
 
-  updateStation(data) {
-    console.log(this.state.region)
-    let lat = JSON.parse(stationList[data].gtfs_latitude);
-    let long = JSON.parse(stationList[data].gtfs_longitude);
-    this.setState({
-      currentStation: stationList[data]
-    });
-    
-    this.rendermap(lat, long);
-   
-  }
 
   static navigationOptions = ({ navigation }) => {
     const {state, setParams} = navigation;
@@ -132,9 +132,9 @@ export default class Main extends Component {
     });   
   }  
 
-  // componentDidMount() {   
-  //   setInterval(() => this.getSchedule(this.state.currentStation), 5000)
-  // }
+  componentDidMount() {   
+    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
+  }
   
   clickAppButton(button, data) {
     if(button === 'Route') {
@@ -143,12 +143,14 @@ export default class Main extends Component {
       this.updateStation(data)
     }
   }
+
   render() {
     const { navigate } = this.props.navigation; 
 
     return (
       <View style={{flex: 1, flexDirection:'column', justifyContent:'space-between'}}>
         <View style={{height: 35, backgroundColor: 'black', alignItems:'center', justifyContent:'center'}}><Text style={{fontFamily:"Helvetica",fontSize:20,fontWeight:'bold',color:'white'}}>{this.state.currentStation.name}</Text></View>
+        
         <View style={stylez.map}>
           <MapContainer 
             region={this.state.region} 
@@ -159,13 +161,16 @@ export default class Main extends Component {
           /> 
         </View>
       
-        <View style={{flex:1, flexDirection:'row', justifyContent:'flex-end'}}>
-          <View style={{flex: 1, flexDirection: 'column', justifyContent:'space-around', alignItems:'center'}}>
-            <View style={{height: 35, width: 160, backgroundColor: 'black'}}><BulletinList station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} schedule={this.state.schedule}/></View>
-          </View>
-
+        
+        <View style={{flex: 1, flexDirection: 'column', alignItems:'center', marginTop:10}}>
+          <View style={{height: 50, width: '75%', borderRadius:10, borderWidth:1, backgroundColor: 'black', justifyContent:'space-around'}}><BulletinList station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} schedule={this.state.schedule}/></View>
+        </View>
+        
+        <View style={{flex:1, flexDirection:'row', justifyContent:'flex-start', marginBottom:30}}>
           <View style={{flex: 1, flexDirection: 'column', justifyContent:'space-around', alignItems:'center'}}>
             <Container><AppButton button={`Station`} clickHandler={this.clickAppButton}/></Container>
+            </View>
+          <View style={{flex: 1, flexDirection: 'column', justifyContent:'space-around', alignItems:'center'}}>
             <Container><AppButton button={`Route`} clickHandler={this.clickAppButton} station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} /></Container>
           </View>
         </View>

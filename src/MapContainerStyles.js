@@ -9,7 +9,7 @@ const styles = {
     alignItems: 'center',
   },
   map: {
-  	height: height * 0.7,
+  	height: height * 0.65,
   	width: width
   },
   trainInfo: {
