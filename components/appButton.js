@@ -64,7 +64,7 @@ export default class AppButton extends Component {
 
   render() {
     return (
-      <Button style={{marginTop: 10, marginBottom: 10}} rounded onPress={this.action}><Text>{this.props.button}</Text></Button>
+      <Button style={{marginTop:'15%'}} rounded onPress={this.action}><Text>{this.props.button}</Text></Button>
     );
   }
 }

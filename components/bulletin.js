@@ -11,18 +11,31 @@ export default class Bulletin extends Component {
     super(props);
   }
 
-    render() {
-      return (        
-          <Text style={{color:'red', textAlign:'center'}}>{this.props.route}:{`\n`}{this.props.schedule
+  componentDidMount(){
+
+  }
+
+  render() {
+    let timeTable = this.props.schedule
             .filter(scheduleElement => scheduleElement.destination === this.props.route)
-            .map( (cur, idx, arr) => {
-              if (arr[idx + 1]) {
-                return <H3 key={idx} style={{color:'red'}}> {cur.minutes},</H3>
-              } else if (!arr[idx + 1]){
-                return <H3 key={idx}> {cur.minutes} </H3>
-              }
-            })
-          } MIN</Text>
-      );
-    }
+            .map( (cur, idx, arr) => cur.minutes).join(', ');
+
+    let colon = this.props.route !== 'Please select a route' ? ': ' : '';
+    let mins = this.props.route !== 'Please select a route' ? ' min' : '';
+    // {this.props.schedule
+    //     .filter(scheduleElement => scheduleElement.destination === this.props.route)
+    //     .map( (cur, idx, arr) => {
+    //         return <H3 key={idx} style={{color:'red'}}> {cur.minutes},</H3>
+    //     })
+    // }
+
+    return (
+      <View style={{flexDirection:'row', justifyContent:'space-between'}}>        
+        <View style={{flexDirection:'column', justifyContent:'space-around'}}><H3 style={{color:'red'}}>{this.props.route}{colon}</H3></View>
+
+          <View style={{flexDirection:'column', justifyContent:'space-around'}}>
+            <View style={{flexDirection:'row'}}><H3 style={{color:'red'}}>{timeTable}{mins}</H3></View></View>
+      </View>
+    );
+  }
 }

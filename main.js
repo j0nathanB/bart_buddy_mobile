@@ -65,21 +65,22 @@ export default class Main extends Component {
   }
 
   updateRoute(data) {
-    this.setState({ currentRoute: this.state.availRoutes[data] });
-    this.getSchedule(this.state.currentStation);
+    this.setState(
+      { currentRoute: this.state.availRoutes[data] },
+      () => this.getSchedule(this.state.currentStation)
+     );
   }
   
   updateStation(data) {
     let lat = JSON.parse(stationList[data].gtfs_latitude);
     let long = JSON.parse(stationList[data].gtfs_longitude);
-    this.setState({
-      currentStation: stationList[data],
-      currentRoute: 'Please select a route'
-    });
-    this.getSchedule(this.state.currentStation);
+    this.setState(
+      { currentStation: stationList[data], currentRoute: 'Please select a route' },
+      () => this.getSchedule(this.state.currentStation)
+    );
     this.rendermap(lat, long);
   }
-  
+
   rendermap(lat, long) {
     this.setState({
       newRegion: {
@@ -132,9 +133,9 @@ export default class Main extends Component {
     });   
   }  
 
-  componentDidMount() {   
-    setInterval(() => this.getSchedule(this.state.currentStation), 5000)
-  }
+  // componentDidMount() {   
+  //   setInterval(() => this.getSchedule(this.state.currentStation), 5000)
+  // }
   
   clickAppButton(button, data) {
     if(button === 'Route') {
@@ -162,15 +163,15 @@ export default class Main extends Component {
         </View>
       
         
-        <View style={{flex: 1, flexDirection: 'column', alignItems:'center', marginTop:10}}>
-          <View style={{height: 50, width: '75%', borderRadius:10, borderWidth:1, backgroundColor: 'black', justifyContent:'space-around'}}><BulletinList station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} schedule={this.state.schedule}/></View>
-        </View>
+
+          <View style={{height: 35, backgroundColor: 'black', justifyContent:'center', alignItems:'center'}}><BulletinList station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} schedule={this.state.schedule}/></View>
+   
         
-        <View style={{flex:1, flexDirection:'row', justifyContent:'flex-start', marginBottom:30}}>
-          <View style={{flex: 1, flexDirection: 'column', justifyContent:'space-around', alignItems:'center'}}>
+        <View style={{flex:1, flexDirection:'row', backgroundColor:'#009bda'}}>
+          <View style={{flex: 1, flexDirection: 'column', alignItems:'center'}}>
             <Container><AppButton button={`Station`} clickHandler={this.clickAppButton}/></Container>
             </View>
-          <View style={{flex: 1, flexDirection: 'column', justifyContent:'space-around', alignItems:'center'}}>
+          <View style={{flex: 1, flexDirection: 'column', alignItems:'center'}}>
             <Container><AppButton button={`Route`} clickHandler={this.clickAppButton} station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} /></Container>
           </View>
         </View>
