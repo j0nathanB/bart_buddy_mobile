@@ -148,6 +148,7 @@ export default class Main extends Component {
 
     return (
       <View style={{flex: 1, flexDirection:'column', justifyContent:'space-between'}}>
+        <View style={{height: 35, backgroundColor: 'black', alignItems:'center', justifyContent:'center'}}><Text style={{fontFamily:"Helvetica",fontSize:20,fontWeight:'bold',color:'white'}}>{this.state.currentStation.name}</Text></View>
         <View style={stylez.map}>
           <MapContainer 
             region={this.state.region} 
@@ -157,10 +158,9 @@ export default class Main extends Component {
             newPlace={this.state.newRegion}
           /> 
         </View>
-
+      
         <View style={{flex:1, flexDirection:'row', justifyContent:'flex-end'}}>
           <View style={{flex: 1, flexDirection: 'column', justifyContent:'space-around', alignItems:'center'}}>
-            <View style={{height: 35, width: 160, alignItems:'center'}}><Text>{this.state.currentStation.name}</Text></View>
             <View style={{height: 35, width: 160, backgroundColor: 'black'}}><BulletinList station={this.state.currentStation} route={this.state.currentRoute} routes={this.state.availRoutes} schedule={this.state.schedule}/></View>
           </View>
 
