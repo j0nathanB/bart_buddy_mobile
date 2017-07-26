@@ -9,7 +9,7 @@ import {
   Dimensions,
   StatusBarIOS
 } from 'react-native'
-
+import stylez from './src/MapContainerStyles.js'
 import { Card, Container, Content, Separator, Text } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 const { width, height } = Dimensions.get('window');
