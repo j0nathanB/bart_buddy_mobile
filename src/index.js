@@ -39,7 +39,7 @@ class MapContainer extends React.Component {
 			<MapView 
 			  provider={"google"}
 			  style={styles.map}
-			  mapType='terrain'
+			  mapType='standard'
 			  zoomEnabled={true}
 			  initialRegion={this.state.region}
 			  region={this.state.newRegion}
