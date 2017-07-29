@@ -150,7 +150,7 @@ export default class Main extends Component {
 
     return (
       <View style={{flex: 1, flexDirection:'column', justifyContent:'space-between'}}>
-        <View style={{height: 35, backgroundColor: 'black', alignItems:'center', justifyContent:'center'}}><Text style={{fontFamily:"Helvetica",fontSize:20,fontWeight:'bold',color:'white'}}>{this.state.currentStation.name}</Text></View>
+        <View style={{height: 35, backgroundColor: 'white', alignItems:'center', justifyContent:'center'}}><Text style={{fontFamily:"Helvetica",fontSize:22,fontWeight:'bold',color:'black'}}>{this.state.currentStation.name}</Text></View>
         
         <View style={stylez.map}>
           <MapContainer 
